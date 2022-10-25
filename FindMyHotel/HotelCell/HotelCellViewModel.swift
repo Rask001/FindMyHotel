@@ -6,63 +6,65 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HotelCellVMProtocol {
-	var networkService: GettingHotelProtocol { get }
 	
+	var networkService: GettingHotelProtocol { get }
 	var hotelName: String { get }
 	var hotelAdress: String { get }
 	var distance: String { get }
 	var suitsAvalibaleCount: String { get }
-	var stars: Double { get }
-
+	var stars: String { get }
+	var hotel: Hotel { get }
+	
 	func fetchImage(completion: @escaping(String) -> Void)
-
+	
+	
 	init(hotel: Hotel)
 }
 
 class HotelCellViewModel: HotelCellVMProtocol {
+
 	var networkService: GettingHotelProtocol = NetworkService()
+	let hotel: Hotel
+	required init(hotel: Hotel) {
+		self.hotel = hotel
+	}
+	
+	var hotelAdress: String {
+		hotel.address
+	}
+	
+	var distance: String {
+		"📍\(hotel.distance)km from center"
+	}
+	
+	var suitsAvalibaleCount: String {
+		hotel.suites_availability
+	}
+	
 	var hotelName: String {
 		hotel.name
 	}
 	
-	var distanceToCenter: String {
-		"\(hotel.distance) meters to the center"
-	}
-	
 	var availableSuites: String {
-		"Available rooms: \(hotel.suitesArray.count)"
+		"There are \(hotel.suitesArray.count) available rooms"
 	}
 	
-	var stars: Double {
-		hotel.stars
+	var stars: String {
+		Helper.starsToString(stars: hotel.stars)
 	}
 	
 	func fetchImage(completion: @escaping (String) -> Void) {
 		networkService.fetchHotel(id: hotel.id) { result in
 			switch result {
 			case .success(let data):
-				completion()
+				let image = data.getImage(id: data.id)
+					completion(image)
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
 		}
-//		networkService. (with: hotel.id) { result in
-//			switch result {
-//
-//			case .success(let data):
-//				guard let imageURL = data.imageHandler else { return }
-//				completion(imageURL)
-//			case .failure(let error):
-//				print(error.localizedDescription)
-//			}
-//		}
-	}
-	
-	private let hotel: Hotel
-	
-	required init(hotel: Hotel) {
-		self.hotel = hotel
 	}
 }

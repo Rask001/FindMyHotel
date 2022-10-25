@@ -22,6 +22,7 @@ class MainView: UIViewController {
 	//MARK: - LIVECYCLE
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		viewModel = MainViewModel()
 		setupTableView()
 		addSubview()
 		layout()
@@ -62,7 +63,8 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath) as! HotelCell
+		cell.viewModel = viewModel.cellViewModel(indexPath: indexPath)
 		return cell
 	}
 }

@@ -14,17 +14,16 @@ struct Hotel: Codable {
 	let stars: Double
 	let distance: Double
 	var imageUrl: String = ""
-	let suitesAvailability: String
+	let suites_availability: String
 	let lat: Double?
 	let lon: Double?
-//	let decoder = JSONDecoder()
-//	decoder.keyDecodingStrategy = .convertFromSnakeCase
-	init() {
-		self.imageUrl = "https://github.com/iMofas/ios-android-test/raw/master/\(id).jpg"
+	
+	func getImage(id: Int) -> String {
+		return "https://github.com/iMofas/ios-android-test/raw/master/\(id).jpg"
 	}
 	
 	var suitesArray: [String] {
-		suitesAvailability.components(separatedBy: ":")
+		suites_availability.components(separatedBy: ":")
 	}
 
 }

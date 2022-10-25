@@ -11,7 +11,7 @@ import UIKit
 protocol GettingHotelProtocol {
 	func fetchHotel(id: Int, completion: @escaping (Result<Hotel, Error>) -> ())
 	func fetchHotelsArray(item: URL, completion: @escaping (Result<[Hotel], Error>) -> Void)
-	func loadCacheImage(item: Hotel, cell: HotelCell)
+	func loadCacheImage(item: Int, imageUrl: String, completion: @escaping(UIImage) -> Void)
 }
 
 class NetworkService: GettingHotelProtocol {
@@ -48,7 +48,7 @@ class NetworkService: GettingHotelProtocol {
 					if let error = error {
 						DispatchQueue.main.async {
 							completion(.failure(error)) //fix error
-							print("check the input Data")
+							print("check the input Data1")
 						}
 					}
 					return
@@ -56,7 +56,7 @@ class NetworkService: GettingHotelProtocol {
 				
 				do {
 					let decoder = JSONDecoder()
-					decoder.keyDecodingStrategy = .convertFromSnakeCase
+					//decoder.keyDecodingStrategy = .convertFromSnakeCase
 					let result = try decoder.decode(T.self, from: data)
 					DispatchQueue.main.async {
 						completion(.success(result))
@@ -64,7 +64,7 @@ class NetworkService: GettingHotelProtocol {
 				} catch {
 					DispatchQueue.main.async {
 						completion(.failure(error))//fix error
-						print("check the input Data")
+						print("check the input Data2")
 					}
 				}
 			}.resume()
@@ -79,26 +79,49 @@ class NetworkService: GettingHotelProtocol {
 		return cache
 	}()
 	
-	func loadCacheImage(item: Hotel, cell: HotelCell) {
+	func loadCacheImage(item: Int, imageUrl: String, completion: @escaping(UIImage) -> Void) {
 		if let image = cahedataSource.object(forKey: "\(item)" as AnyObject) {
-			cell.myImageView.image = image
+			completion(image)
+			//cell.myImageView.image = image
 		} else {
-			loadImage(item: item, cell: cell)
+			let image = loadImage(imageUrl: imageUrl)
+			//let image = loadImage(item: item, cell: cell)
+			completion(image)
 		}
 	}
 	
-	private func loadImage(item: Hotel, cell: HotelCell) {
+//	private func loadImage(item: Hotel, cell: HotelCell) -> UIImage {
+//		var image = UIImage()
+//		DispatchQueue.global(qos: .userInitiated).async {
+//			guard item.imageUrl != "" else { fatalError() } //fix error
+//			guard let apiURL = URL(string: item.imageUrl) else { fatalError() } //fix error
+//			let session = URLSession(configuration: .default)
+//			let task = session.dataTask(with: apiURL) { data, _, error in
+//				guard let data = data, error == nil else { print(error!.localizedDescription); return } //fix error
+//				DispatchQueue.main.async {
+//					image = UIImage(data: data)!
+//					//cell.myImageView.image = UIImage(data: data)!
+//				}
+//			}
+//			task.resume()
+//		}
+//		return image
+//	}
+	
+	private func loadImage(imageUrl: String) -> UIImage {
+		var image = UIImage()
 		DispatchQueue.global(qos: .userInitiated).async {
-			guard item.imageUrl != "" else { fatalError() } //fix error
-			guard let apiURL = URL(string: item.imageUrl) else { fatalError() } //fix error
+			guard imageUrl != "" else { fatalError() } //fix error
+			guard let apiURL = URL(string: imageUrl) else { fatalError() } //fix error
 			let session = URLSession(configuration: .default)
 			let task = session.dataTask(with: apiURL) { data, _, error in
 				guard let data = data, error == nil else { print(error!.localizedDescription); return } //fix error
 				DispatchQueue.main.async {
-					cell.myImageView.image = UIImage(data: data)!
+					image = UIImage(data: data)!
 				}
 			}
 			task.resume()
 		}
+		return image
 	}
 }

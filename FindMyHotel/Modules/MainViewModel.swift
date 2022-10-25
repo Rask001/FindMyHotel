@@ -14,12 +14,14 @@ enum links {
 
 protocol MainViewModelProtocol {
 	var hotels: [Hotel] { get }
+	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: GettingHotelProtocol { get }
 	func fetchHotels(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
 }
 
 class MainViewModel: MainViewModelProtocol {
+	
 	var networkService: GettingHotelProtocol = NetworkService()
 	var hotels: [Hotel] = []
 	
@@ -34,6 +36,11 @@ class MainViewModel: MainViewModelProtocol {
 				completion()
 			}
 		}
+	}
+	
+	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
+		let hotel = hotels[indexPath.row]
+		return HotelCellViewModel(hotel: hotel)
 	}
 	
 	func numberOfRows() -> Int {

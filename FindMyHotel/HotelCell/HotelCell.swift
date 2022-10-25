@@ -38,6 +38,22 @@ final class HotelCell: UITableViewCell {
 	private let suitsAvalibaleCount = UILabel()
 	private var stackView = UIStackView()
 	
+	var viewModel: HotelCellVMProtocol! {
+		didSet {
+			hotelName.text = viewModel.hotelName
+			distance.text = viewModel.distance
+			suitsAvalibaleCount.text = viewModel.suitsAvalibaleCount
+			stars.text = viewModel.stars
+			viewModel.fetchImage { [weak self] imageData in
+				guard let self else { return }
+				let id = self.viewModel.hotel.id
+				self.viewModel.networkService.loadCacheImage(item: id, imageUrl: imageData) { image in
+					self.myImageView.image = image
+				}
+			}
+		}
+	}
+	
 	
 	
 	//MARK: - INIT
