@@ -9,21 +9,31 @@
 /* Begin PBXBuildFile section */
 		3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F522907EBC000B292A7 /* AppDelegate.swift */; };
 		3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */; };
-		3AFE7F572907EBC000B292A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F562907EBC000B292A7 /* ViewController.swift */; };
-		3AFE7F5A2907EBC000B292A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7F582907EBC000B292A7 /* Main.storyboard */; };
+		3AFE7F572907EBC000B292A7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F562907EBC000B292A7 /* MainView.swift */; };
 		3AFE7F5C2907EBC400B292A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7F5B2907EBC400B292A7 /* Assets.xcassets */; };
 		3AFE7F5F2907EBC400B292A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7F5D2907EBC400B292A7 /* LaunchScreen.storyboard */; };
+		3AFE7F672907F09E00B292A7 /* HotelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F662907F09E00B292A7 /* HotelCell.swift */; };
+		3AFE7F6929082F8900B292A7 /* HotelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F6829082F8800B292A7 /* HotelCellViewModel.swift */; };
+		3AFE7F6C290833B800B292A7 /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F6B290833B800B292A7 /* Hotel.swift */; };
+		3AFE7F712908397B00B292A7 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F702908397B00B292A7 /* NetworkServices.swift */; };
+		3AFE7F7429085B6700B292A7 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F7329085B6700B292A7 /* Helper.swift */; };
+		3AFE7F7729087A9200B292A7 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F7629087A9200B292A7 /* MainViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3AFE7F4F2907EBC000B292A7 /* FindMyHotel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMyHotel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFE7F522907EBC000B292A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3AFE7F562907EBC000B292A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3AFE7F592907EBC000B292A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3AFE7F562907EBC000B292A7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		3AFE7F5B2907EBC400B292A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AFE7F5E2907EBC400B292A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AFE7F602907EBC400B292A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AFE7F662907F09E00B292A7 /* HotelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCell.swift; sourceTree = "<group>"; };
+		3AFE7F6829082F8800B292A7 /* HotelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCellViewModel.swift; sourceTree = "<group>"; };
+		3AFE7F6B290833B800B292A7 /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
+		3AFE7F702908397B00B292A7 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
+		3AFE7F7329085B6700B292A7 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		3AFE7F7629087A9200B292A7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +66,68 @@
 		3AFE7F512907EBC000B292A7 /* FindMyHotel */ = {
 			isa = PBXGroup;
 			children = (
+				3AFE7F7529085B9D00B292A7 /* Helpers */,
+				3AFE7F6E290838B600B292A7 /* Application */,
+				3AFE7F6F290838FC00B292A7 /* Modules */,
+				3AFE7F6D290833BD00B292A7 /* Model */,
+				3AFE7F6A29082F9000B292A7 /* HotelCell */,
+				3AFE7F722908398200B292A7 /* Networking */,
+			);
+			path = FindMyHotel;
+			sourceTree = "<group>";
+		};
+		3AFE7F6A29082F9000B292A7 /* HotelCell */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE7F662907F09E00B292A7 /* HotelCell.swift */,
+				3AFE7F6829082F8800B292A7 /* HotelCellViewModel.swift */,
+			);
+			path = HotelCell;
+			sourceTree = "<group>";
+		};
+		3AFE7F6D290833BD00B292A7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE7F6B290833B800B292A7 /* Hotel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3AFE7F6E290838B600B292A7 /* Application */ = {
+			isa = PBXGroup;
+			children = (
 				3AFE7F522907EBC000B292A7 /* AppDelegate.swift */,
 				3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */,
-				3AFE7F562907EBC000B292A7 /* ViewController.swift */,
-				3AFE7F582907EBC000B292A7 /* Main.storyboard */,
 				3AFE7F5B2907EBC400B292A7 /* Assets.xcassets */,
 				3AFE7F5D2907EBC400B292A7 /* LaunchScreen.storyboard */,
 				3AFE7F602907EBC400B292A7 /* Info.plist */,
 			);
-			path = FindMyHotel;
+			path = Application;
+			sourceTree = "<group>";
+		};
+		3AFE7F6F290838FC00B292A7 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE7F562907EBC000B292A7 /* MainView.swift */,
+				3AFE7F7629087A9200B292A7 /* MainViewModel.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		3AFE7F722908398200B292A7 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE7F702908397B00B292A7 /* NetworkServices.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		3AFE7F7529085B9D00B292A7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE7F7329085B6700B292A7 /* Helper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +190,6 @@
 			files = (
 				3AFE7F5F2907EBC400B292A7 /* LaunchScreen.storyboard in Resources */,
 				3AFE7F5C2907EBC400B292A7 /* Assets.xcassets in Resources */,
-				3AFE7F5A2907EBC000B292A7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +200,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AFE7F572907EBC000B292A7 /* ViewController.swift in Sources */,
+				3AFE7F6C290833B800B292A7 /* Hotel.swift in Sources */,
+				3AFE7F572907EBC000B292A7 /* MainView.swift in Sources */,
 				3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */,
+				3AFE7F6929082F8900B292A7 /* HotelCellViewModel.swift in Sources */,
+				3AFE7F712908397B00B292A7 /* NetworkServices.swift in Sources */,
+				3AFE7F672907F09E00B292A7 /* HotelCell.swift in Sources */,
 				3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */,
+				3AFE7F7429085B6700B292A7 /* Helper.swift in Sources */,
+				3AFE7F7729087A9200B292A7 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3AFE7F582907EBC000B292A7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3AFE7F592907EBC000B292A7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3AFE7F5D2907EBC400B292A7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -216,7 +276,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -289,10 +349,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H6Q7NMAZAW;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FindMyHotel/Info.plist;
+				INFOPLIST_FILE = FindMyHotel/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -317,10 +376,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H6Q7NMAZAW;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FindMyHotel/Info.plist;
+				INFOPLIST_FILE = FindMyHotel/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
