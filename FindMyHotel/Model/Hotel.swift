@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Hotel: Codable {
+struct Hotel: Decodable {
 	let id: Int
 	let name: String
 	let address: String
 	let stars: Double
 	let distance: Double
-	var imageUrl: String = ""
-	let suites_availability: String
+	var imageUrl: String?
+	let suitesAvailability: String
 	let lat: Double?
 	let lon: Double?
 	
@@ -23,7 +23,7 @@ struct Hotel: Codable {
 	}
 	
 	var suitesArray: [String] {
-		suites_availability.components(separatedBy: ":")
+		suitesAvailability.components(separatedBy: ":")
 	}
 
 }

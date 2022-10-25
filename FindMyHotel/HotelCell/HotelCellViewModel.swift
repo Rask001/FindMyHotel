@@ -41,15 +41,11 @@ class HotelCellViewModel: HotelCellVMProtocol {
 	}
 	
 	var suitsAvalibaleCount: String {
-		hotel.suites_availability
+		"Only \(hotel.suitesArray.count) rooms left"
 	}
 	
 	var hotelName: String {
 		hotel.name
-	}
-	
-	var availableSuites: String {
-		"There are \(hotel.suitesArray.count) available rooms"
 	}
 	
 	var stars: String {

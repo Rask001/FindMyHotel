@@ -90,24 +90,21 @@ final class HotelCell: UITableViewCell {
 	}
 	
 	private func setupHotelName() {
-		self.hotelName.text = "Grand Palace"
 		self.hotelName.font = Constants.hotelNameFont
+		self.hotelName.numberOfLines = 0
+		self.hotelName.adjustsFontSizeToFitWidth = true
 	}
 	
 	private func setupHotelAdress() {
-		self.hotelAdress.text = "5th Avenue, Garden St."
 	}
 	private func setupStarsLabel() {
-		self.stars.text = "★ ★ ★ ★ ☆"
 		self.stars.textColor = .systemYellow
 	}
 	private func setupDistance() {
-		self.distance.text = "📍 99.9 from center"
 		self.distance.textColor = .systemGray
 		self.distance.font = Constants.distanceNameFont
 	}
 	private func setupSuitsAvalibaleCount() {
-		self.suitsAvalibaleCount.text = "Suits avalibale is: 4"
 	}
 	
 	
@@ -153,10 +150,10 @@ final class HotelCell: UITableViewCell {
 		self.myImageView.widthAnchor.constraint(equalToConstant: self.bounds.width/2.5).isActive = true
 		
 		self.stackView.translatesAutoresizingMaskIntoConstraints = false
-		self.stackView.leadingAnchor.constraint(equalTo: self.myImageView.trailingAnchor, constant: 20).isActive = true
+		self.stackView.leadingAnchor.constraint(equalTo: self.myImageView.trailingAnchor, constant: 10).isActive = true
 		self.stackView.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor, constant: 20).isActive = true
 		self.stackView.bottomAnchor.constraint(equalTo: self.backgroundViewCell.bottomAnchor, constant: -20).isActive = true
-		self.stackView.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor, constant: -20).isActive = true
+		self.stackView.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor, constant: -10).isActive = true
 	}
 
 }

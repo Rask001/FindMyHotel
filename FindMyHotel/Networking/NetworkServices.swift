@@ -43,6 +43,7 @@ class NetworkService: GettingHotelProtocol {
 	
 	
 	private func request<T: Decodable>(url: URL, completion: @escaping(Result<T, Error>) -> Void) {
+		guard let url = URL(string:"https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json") else { return }
 			URLSession.shared.dataTask(with: url) { data, _, error in
 				guard let data = data else {
 					if let error = error {
@@ -56,7 +57,7 @@ class NetworkService: GettingHotelProtocol {
 				
 				do {
 					let decoder = JSONDecoder()
-					//decoder.keyDecodingStrategy = .convertFromSnakeCase
+					decoder.keyDecodingStrategy = .convertFromSnakeCase
 					let result = try decoder.decode(T.self, from: data)
 					DispatchQueue.main.async {
 						completion(.success(result))
