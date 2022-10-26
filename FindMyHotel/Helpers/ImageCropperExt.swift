@@ -5,8 +5,8 @@
 //  Created by Антон on 26.10.2022.
 //
 
-import Foundation
 import UIKit
+
 extension UIImage {
 		func crop( rect: CGRect) -> UIImage {
 				var rect = rect

@@ -18,8 +18,16 @@ struct Hotel: Decodable {
 	let lat: Double?
 	let lon: Double?
 	
-	var suitesArray: [String] {
-		suitesAvailability.components(separatedBy: ":")
+	var suites: String {
+		let suites = suitesAvailability.replacingOccurrences(of: ":", with: ", ")
+		let text = "avalible rooms: \(suites)"
+		return text
 	}
-
+	
+	var suitesArray: [String] {
+		let suites = suitesAvailability
+		var transform = suites.components(separatedBy: ":").compactMap(Int.init)
+		var str = transform.map {"\($0)"}
+		return str
+	}
 }

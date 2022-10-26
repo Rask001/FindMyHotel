@@ -1,18 +1,20 @@
 //
-//  HotelCellViewModel.swift
+//  DetailViewModel.swift
 //  FindMyHotel
 //
-//  Created by Антон on 25.10.2022.
+//  Created by Антон on 26.10.2022.
 //
+
+import Foundation
 
 import Foundation
 import UIKit
 
-class HotelCellViewModel: HotelCellVMProtocol {
+class DetailViewModel: DetailViewModelProtocol {
 	
 	//MARK: - PROPERTY
 	var networkService: GettingHotelProtocol = NetworkService()
-	let hotel: Hotel
+	var hotel: Hotel
 	required init(hotel: Hotel) {
 		self.hotel = hotel
 	}
@@ -23,10 +25,6 @@ class HotelCellViewModel: HotelCellVMProtocol {
 	
 	var distance: String {
 		"📍\(hotel.distance)km from center"
-	}
-	
-	var suitsAvalibaleCount: String {
-		"Only \(hotel.suitesArray.count) rooms left"
 	}
 	
 	var hotelName: String {
@@ -46,5 +44,25 @@ class HotelCellViewModel: HotelCellVMProtocol {
 			}
 		}
 	}
+	
+	func fetchHotelForDetailView(completion: @escaping () -> Void) {
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+			switch result {
+			case .success(let data):
+				self.hotel = data
+				completion()
+			case .failure(let error):
+				print(error.localizedDescription)
+				completion()
+			}
+		}
+	}
+	
+//	func formatSuites() -> String {
+//		
+//	}
+	
+	func numberOfRows() -> Int {
+		hotel.suitesArray.count
+	}
 }
-

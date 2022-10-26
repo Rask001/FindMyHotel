@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3A84F4D229096B6F00CEAE50 /* ImageCropperExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D129096B6F00CEAE50 /* ImageCropperExt.swift */; };
+		3A84F4D42909AD6B00CEAE50 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D32909AD6B00CEAE50 /* Builder.swift */; };
+		3A84F4D62909AE0800CEAE50 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D52909AE0800CEAE50 /* DetailView.swift */; };
+		3A84F4D82909AE3000CEAE50 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D72909AE3000CEAE50 /* DetailViewModel.swift */; };
+		3A84F4DC2909B70E00CEAE50 /* HotelCellVMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4DB2909B70E00CEAE50 /* HotelCellVMProtocol.swift */; };
+		3A84F4DE2909B75100CEAE50 /* DetailViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4DD2909B75100CEAE50 /* DetailViewModelProtocol.swift */; };
+		3A84F4E02909B77A00CEAE50 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4DF2909B77A00CEAE50 /* MainViewModelProtocol.swift */; };
 		3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F522907EBC000B292A7 /* AppDelegate.swift */; };
 		3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */; };
 		3AFE7F572907EBC000B292A7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F562907EBC000B292A7 /* MainView.swift */; };
@@ -24,6 +30,12 @@
 
 /* Begin PBXFileReference section */
 		3A84F4D129096B6F00CEAE50 /* ImageCropperExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropperExt.swift; sourceTree = "<group>"; };
+		3A84F4D32909AD6B00CEAE50 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		3A84F4D52909AE0800CEAE50 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		3A84F4D72909AE3000CEAE50 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		3A84F4DB2909B70E00CEAE50 /* HotelCellVMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCellVMProtocol.swift; sourceTree = "<group>"; };
+		3A84F4DD2909B75100CEAE50 /* DetailViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelProtocol.swift; sourceTree = "<group>"; };
+		3A84F4DF2909B77A00CEAE50 /* MainViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelProtocol.swift; sourceTree = "<group>"; };
 		3AFE7F4F2907EBC000B292A7 /* FindMyHotel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMyHotel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFE7F522907EBC000B292A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +63,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A84F4D92909AE4200CEAE50 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE7F562907EBC000B292A7 /* MainView.swift */,
+				3AFE7F7629087A9200B292A7 /* MainViewModel.swift */,
+				3A84F4DF2909B77A00CEAE50 /* MainViewModelProtocol.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		3A84F4DA2909AE4C00CEAE50 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				3A84F4D52909AE0800CEAE50 /* DetailView.swift */,
+				3A84F4D72909AE3000CEAE50 /* DetailViewModel.swift */,
+				3A84F4DD2909B75100CEAE50 /* DetailViewModelProtocol.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		3AFE7F462907EBBF00B292A7 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +117,7 @@
 			children = (
 				3AFE7F662907F09E00B292A7 /* HotelCell.swift */,
 				3AFE7F6829082F8800B292A7 /* HotelCellViewModel.swift */,
+				3A84F4DB2909B70E00CEAE50 /* HotelCellVMProtocol.swift */,
 			);
 			path = HotelCell;
 			sourceTree = "<group>";
@@ -100,8 +133,9 @@
 		3AFE7F6E290838B600B292A7 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				3AFE7F522907EBC000B292A7 /* AppDelegate.swift */,
 				3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */,
+				3AFE7F522907EBC000B292A7 /* AppDelegate.swift */,
+				3A84F4D32909AD6B00CEAE50 /* Builder.swift */,
 				3AFE7F5B2907EBC400B292A7 /* Assets.xcassets */,
 				3AFE7F5D2907EBC400B292A7 /* LaunchScreen.storyboard */,
 				3AFE7F602907EBC400B292A7 /* Info.plist */,
@@ -112,8 +146,8 @@
 		3AFE7F6F290838FC00B292A7 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				3AFE7F562907EBC000B292A7 /* MainView.swift */,
-				3AFE7F7629087A9200B292A7 /* MainViewModel.swift */,
+				3A84F4D92909AE4200CEAE50 /* Main */,
+				3A84F4DA2909AE4C00CEAE50 /* Detail */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -206,17 +240,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A84F4E02909B77A00CEAE50 /* MainViewModelProtocol.swift in Sources */,
 				3AFE7F6C290833B800B292A7 /* Hotel.swift in Sources */,
 				3AFE7F572907EBC000B292A7 /* MainView.swift in Sources */,
 				3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */,
+				3A84F4DE2909B75100CEAE50 /* DetailViewModelProtocol.swift in Sources */,
 				3AFE7F6929082F8900B292A7 /* HotelCellViewModel.swift in Sources */,
 				3AFE7F712908397B00B292A7 /* NetworkServices.swift in Sources */,
 				3AFE7F7929093EE400B292A7 /* UrlServiceExt.swift in Sources */,
 				3AFE7F672907F09E00B292A7 /* HotelCell.swift in Sources */,
+				3A84F4D62909AE0800CEAE50 /* DetailView.swift in Sources */,
 				3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */,
+				3A84F4DC2909B70E00CEAE50 /* HotelCellVMProtocol.swift in Sources */,
+				3A84F4D82909AE3000CEAE50 /* DetailViewModel.swift in Sources */,
 				3A84F4D229096B6F00CEAE50 /* ImageCropperExt.swift in Sources */,
 				3AFE7F7429085B6700B292A7 /* Helper.swift in Sources */,
 				3AFE7F7729087A9200B292A7 /* MainViewModel.swift in Sources */,
+				3A84F4D42909AD6B00CEAE50 /* Builder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,9 +32,9 @@ class MainView: UIViewController {
 	private func setupTableView() {
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.backgroundColor = .secondarySystemBackground
+		self.tableView.backgroundColor = .systemGray5
 		self.tableView.separatorStyle = .none
-		self.tableView.allowsSelection = false
+		self.tableView.allowsSelection = true
 		self.tableView.showsVerticalScrollIndicator = false
 		tableView.rowHeight = 300
 		self.tableView.register(HotelCell.self, forCellReuseIdentifier: HotelCell.identifire)
@@ -66,5 +66,12 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
 		let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath) as! HotelCell
 		cell.viewModel = viewModel.cellViewModel(indexPath: indexPath)
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		print(#function, indexPath.row)
+		let hotel = viewModel.hotels[indexPath.row]
+		let detailView = ModuleBuilder.createDetailView(hotel: hotel)
+		navigationController?.show(detailView, sender: self)
 	}
 }

@@ -12,11 +12,9 @@ protocol GettingHotelProtocol {
 	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ())
 	func fetchHotelsArray(url: URL, completion: @escaping (Result<[Hotel], Error>) -> Void)
 	func imageDownloadAndCahed(result: Result<Hotel, Error>, completion: @escaping (UIImage) -> Void)
-	//func loadCacheImage(item: Int, imageUrl: String, completion: @escaping(UIImage) -> Void)
 }
 
 class NetworkService: GettingHotelProtocol {
-
 	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ()) {
 		request(url: url) { (result: Result<Hotel, Error>) in
 			switch result {
@@ -27,7 +25,6 @@ class NetworkService: GettingHotelProtocol {
 			}
 		}
 	}
-	
 	
 	func fetchHotelsArray(url: URL, completion: @escaping (Result<[Hotel], Error>) -> Void) {
 		request(url: url) { (result: Result<[Hotel], Error>) in

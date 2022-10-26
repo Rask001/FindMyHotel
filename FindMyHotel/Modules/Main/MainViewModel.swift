@@ -8,19 +8,13 @@
 import Foundation
 import UIKit
 
-protocol MainViewModelProtocol {
-	var hotels: [Hotel] { get }
-	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
-	var networkService: GettingHotelProtocol { get }
-	func fetchHotelsForMainView(completion: @escaping() -> Void)
-	func numberOfRows() -> Int
-}
-
 class MainViewModel: MainViewModelProtocol {
 	
+	//MARK: - PROPERTY
 	var networkService: GettingHotelProtocol = NetworkService()
 	var hotels: [Hotel] = []
 	
+	//MARK: - ACTIONS
 	func fetchHotelsForMainView(completion: @escaping () -> Void) {
 		networkService.fetchHotelsArray(url: .getHotelsListUrl) { result in
 			switch result {
