@@ -44,11 +44,10 @@ final class HotelCell: UITableViewCell {
 			distance.text = viewModel.distance
 			suitsAvalibaleCount.text = viewModel.suitsAvalibaleCount
 			stars.text = viewModel.stars
-			viewModel.fetchImage { [weak self] imageData in
-				guard let self else { return }
-				let id = self.viewModel.hotel.id
-				self.viewModel.networkService.loadCacheImage(item: id, imageUrl: imageData) { image in
-					self.myImageView.image = image
+			hotelAdress.text = viewModel.hotelAdress
+			viewModel.fetchImage { [weak self] image in
+				DispatchQueue.main.async {
+					self?.myImageView.image = image
 				}
 			}
 		}
@@ -96,6 +95,8 @@ final class HotelCell: UITableViewCell {
 	}
 	
 	private func setupHotelAdress() {
+		self.hotelAdress.numberOfLines = 0
+		self.hotelAdress.adjustsFontSizeToFitWidth = true
 	}
 	private func setupStarsLabel() {
 		self.stars.textColor = .systemYellow

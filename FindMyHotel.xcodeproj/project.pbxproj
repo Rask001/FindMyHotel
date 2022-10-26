@@ -18,6 +18,7 @@
 		3AFE7F712908397B00B292A7 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F702908397B00B292A7 /* NetworkServices.swift */; };
 		3AFE7F7429085B6700B292A7 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F7329085B6700B292A7 /* Helper.swift */; };
 		3AFE7F7729087A9200B292A7 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F7629087A9200B292A7 /* MainViewModel.swift */; };
+		3AFE7F7929093EE400B292A7 /* UrlServiceExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F7829093EE400B292A7 /* UrlServiceExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		3AFE7F702908397B00B292A7 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		3AFE7F7329085B6700B292A7 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		3AFE7F7629087A9200B292A7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		3AFE7F7829093EE400B292A7 /* UrlServiceExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlServiceExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				3AFE7F702908397B00B292A7 /* NetworkServices.swift */,
+				3AFE7F7829093EE400B292A7 /* UrlServiceExt.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */,
 				3AFE7F6929082F8900B292A7 /* HotelCellViewModel.swift in Sources */,
 				3AFE7F712908397B00B292A7 /* NetworkServices.swift in Sources */,
+				3AFE7F7929093EE400B292A7 /* UrlServiceExt.swift in Sources */,
 				3AFE7F672907F09E00B292A7 /* HotelCell.swift in Sources */,
 				3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */,
 				3AFE7F7429085B6700B292A7 /* Helper.swift in Sources */,

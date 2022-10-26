@@ -18,8 +18,7 @@ protocol HotelCellVMProtocol {
 	var stars: String { get }
 	var hotel: Hotel { get }
 	
-	func fetchImage(completion: @escaping(String) -> Void)
-	
+	func fetchImage(completion: @escaping(UIImage) -> Void)
 	
 	init(hotel: Hotel)
 }
@@ -52,12 +51,17 @@ class HotelCellViewModel: HotelCellVMProtocol {
 		Helper.starsToString(stars: hotel.stars)
 	}
 	
-	func fetchImage(completion: @escaping (String) -> Void) {
-		networkService.fetchHotel(id: hotel.id) { result in
+	func fetchImage(completion: @escaping (UIImage) -> Void) {
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
 			switch result {
 			case .success(let data):
-				let image = data.getImage(id: data.id)
-					completion(image)
+				guard let imageId = data.image else { return }
+				let url: URL = .getImageUrl(withImageId: imageId)
+				if let data = try? Data(contentsOf: url) {
+					if let image = UIImage(data: data) {
+						completion(image)
+					}
+				}
 			case .failure(let error):
 				print(error.localizedDescription)
 			}

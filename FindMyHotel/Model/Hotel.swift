@@ -13,14 +13,10 @@ struct Hotel: Decodable {
 	let address: String
 	let stars: Double
 	let distance: Double
-	var imageUrl: String?
+	var image: String?
 	let suitesAvailability: String
 	let lat: Double?
 	let lon: Double?
-	
-	func getImage(id: Int) -> String {
-		return "https://github.com/iMofas/ios-android-test/raw/master/\(id).jpg"
-	}
 	
 	var suitesArray: [String] {
 		suitesAvailability.components(separatedBy: ":")

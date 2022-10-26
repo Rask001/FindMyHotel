@@ -13,7 +13,7 @@ class MainView: UIViewController {
 	private let tableView = UITableView()
 	private var viewModel: MainViewModelProtocol! {
 		didSet {
-			viewModel.fetchHotels {
+			viewModel.fetchHotelsForMainView {
 				self.tableView.reloadData()
 			}
 		}
