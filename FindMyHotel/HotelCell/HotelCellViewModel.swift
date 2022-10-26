@@ -17,14 +17,13 @@ protocol HotelCellVMProtocol {
 	var suitsAvalibaleCount: String { get }
 	var stars: String { get }
 	var hotel: Hotel { get }
-	
 	func fetchImage(completion: @escaping(UIImage) -> Void)
 	
 	init(hotel: Hotel)
 }
 
 class HotelCellViewModel: HotelCellVMProtocol {
-
+	
 	var networkService: GettingHotelProtocol = NetworkService()
 	let hotel: Hotel
 	required init(hotel: Hotel) {
@@ -52,19 +51,12 @@ class HotelCellViewModel: HotelCellVMProtocol {
 	}
 	
 	func fetchImage(completion: @escaping (UIImage) -> Void) {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
-			switch result {
-			case .success(let data):
-				guard let imageId = data.image else { return }
-				let url: URL = .getImageUrl(withImageId: imageId)
-				if let data = try? Data(contentsOf: url) {
-					if let image = UIImage(data: data) {
-						completion(image)
-					}
-				}
-			case .failure(let error):
-				print(error.localizedDescription)
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
+			guard let self else { return }
+			self.networkService.imageDownloadAndCahed(result: result) { image in
+				completion(image)
 			}
 		}
 	}
 }
+

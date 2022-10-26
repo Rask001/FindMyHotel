@@ -11,17 +11,6 @@ import UIKit
 fileprivate enum Constants {
 	static var hotelNameFont: UIFont { UIFont(name: "Helvetica Neue Medium", size: 20)!}
 	static var distanceNameFont: UIFont { UIFont(name: "Helvetica Neue", size: 16)!}
-	static var navigationItemTitle: String { NSLocalizedString("new task", comment: "") }
-	static var textFiledPlaceholder: String { NSLocalizedString("...write something here", comment: "")  }
-	static var leftButtonImage: UIImage { UIImage(named: "xmrk")! }
-	static var rightButtonImage: UIImage { UIImage(named: "chckmrk")! }
-	static var alertLabelImage: UIImage { UIImage(systemName: "alarm")! }
-	static var repeatLabelImage: UIImage { UIImage(systemName: "repeat")! }
-	static var infoLabelFont: UIFont { UIFont(name: "Futura", size: 17)!}
-	static var infoLabelFont20: UIFont { UIFont(name: "Futura", size: 20)!}
-	static var navigationTitleFont: UIFont { UIFont(name: "Futura", size: 20)!}
-	static var backgroundColorView: UIColor { .systemBackground }
-	static var barColorView: UIColor { UIColor(named: "barNewTask") ?? .systemBackground }
 }
 
 //MARK: - VIEW
@@ -30,13 +19,14 @@ final class HotelCell: UITableViewCell {
 	//MARK: - PROPERTY
 	static let identifire = "HotelCell"
 	private let backgroundViewCell = UIView()
-	internal var myImageView = UIImageView(image: UIImage(named: "room"))
+	internal var myImageView = UIImageView()
 	private let hotelName = UILabel()
 	private let hotelAdress = UILabel()
 	private let stars = UILabel()
 	private let distance = UILabel()
 	private let suitsAvalibaleCount = UILabel()
 	private var stackView = UIStackView()
+	private var spinner = UIActivityIndicatorView()
 	
 	var viewModel: HotelCellVMProtocol! {
 		didSet {
@@ -46,14 +36,15 @@ final class HotelCell: UITableViewCell {
 			stars.text = viewModel.stars
 			hotelAdress.text = viewModel.hotelAdress
 			viewModel.fetchImage { [weak self] image in
+				guard let self else { return }
+				let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.99, height: 0.9))
 				DispatchQueue.main.async {
-					self?.myImageView.image = image
+					self.myImageView.image = croppedImg
+					self.spinner.stopAnimating()
 				}
 			}
 		}
 	}
-	
-	
 	
 	//MARK: - INIT
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -62,13 +53,12 @@ final class HotelCell: UITableViewCell {
 		backgroundViewCellShadow()
 		setupImageView()
 		setupStackView()
-		
+		setupSpinner()
 		setupHotelName()
 		setupHotelAdress()
 		setupStarsLabel()
 		setupDistance()
 		setupSuitsAvalibaleCount()
-		
 		addSubviewAndConfigure()
 		layout()
 	}
@@ -76,7 +66,6 @@ final class HotelCell: UITableViewCell {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
 	
 	//MARK: - SETUP
 	private func setupStackView() {
@@ -86,6 +75,14 @@ final class HotelCell: UITableViewCell {
 		self.stackView.spacing = 10
 		self.stackView.backgroundColor = backgroundViewCell.backgroundColor
 		self.stackView.distribution = .fillEqually
+	}
+	
+	private func setupSpinner() {
+		spinner = UIActivityIndicatorView(style: .large)
+		spinner.hidesWhenStopped = true
+		spinner.color = .black
+		spinner.isHidden = false
+		spinner.startAnimating()
 	}
 	
 	private func setupHotelName() {
@@ -98,18 +95,19 @@ final class HotelCell: UITableViewCell {
 		self.hotelAdress.numberOfLines = 0
 		self.hotelAdress.adjustsFontSizeToFitWidth = true
 	}
+	
 	private func setupStarsLabel() {
 		self.stars.textColor = .systemYellow
 	}
+	
 	private func setupDistance() {
 		self.distance.textColor = .systemGray
 		self.distance.font = Constants.distanceNameFont
 	}
+	
 	private func setupSuitsAvalibaleCount() {
+		
 	}
-	
-	
-	
 	
 	private func setupImageView() {
 		self.myImageView.contentMode = .scaleAspectFill
@@ -135,6 +133,7 @@ final class HotelCell: UITableViewCell {
 		self.contentView.addSubview(backgroundViewCell)
 		self.backgroundViewCell.addSubview(self.myImageView)
 		self.backgroundViewCell.addSubview(self.stackView)
+		self.myImageView.addSubview(self.spinner)
 	}
 	
 	internal func layout() {
@@ -155,11 +154,9 @@ final class HotelCell: UITableViewCell {
 		self.stackView.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor, constant: 20).isActive = true
 		self.stackView.bottomAnchor.constraint(equalTo: self.backgroundViewCell.bottomAnchor, constant: -20).isActive = true
 		self.stackView.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor, constant: -10).isActive = true
+		
+		self.spinner.translatesAutoresizingMaskIntoConstraints = false
+		self.spinner.centerXAnchor.constraint(equalTo: self.myImageView.centerXAnchor).isActive = true
+		self.spinner.centerYAnchor.constraint(equalTo: self.myImageView.centerYAnchor).isActive = true
 	}
-
-}
-
-//MARK: - EXTENSION
-extension HotelCell {
-	
 }

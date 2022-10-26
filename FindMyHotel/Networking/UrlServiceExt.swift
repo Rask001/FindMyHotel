@@ -20,3 +20,4 @@ extension URL {
 		URL(string: "https://github.com/iMofas/ios-android-test/raw/master/\(id)")!
 	}
 }
+
