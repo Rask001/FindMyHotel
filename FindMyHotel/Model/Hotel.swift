@@ -19,15 +19,22 @@ struct Hotel: Decodable {
 	let lon: Double?
 	
 	var suites: String {
-		let suites = suitesAvailability.replacingOccurrences(of: ":", with: ", ")
-		let text = "avalible rooms: \(suites)"
+		let suites: String
+		let text: String
+		
+		if suitesAvailability.count < 3 {
+			suites = suitesAvailability.replacingOccurrences(of: ":", with: "")
+			text = "avalible room: \(suites)"
+		} else {
+			suites = suitesAvailability.replacingOccurrences(of: ":", with: ", ")
+			text = "avalible rooms: \(suites)"
+		}
 		return text
 	}
 	
-	var suitesArray: [String] {
-		let suites = suitesAvailability
-		var transform = suites.components(separatedBy: ":").compactMap(Int.init)
-		var str = transform.map {"\($0)"}
-		return str
+	var suitesArray: [Int] {
+				var transform = suites.components(separatedBy: ":").compactMap(Int.init)
+				return transform
+			}
 	}
-}
+
