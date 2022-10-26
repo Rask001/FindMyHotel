@@ -24,7 +24,6 @@ class ModuleBuilder: BuilderProtocol {
 	
 	static func createDetailView(hotel: Hotel) -> UIViewController {
 		let view = DetailView()
-		let networkService = NetworkService()
 		let viewModel = DetailViewModel(hotel: hotel)
 		view.viewModel = viewModel
 		return view
