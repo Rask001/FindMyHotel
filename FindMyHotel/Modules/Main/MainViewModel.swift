@@ -12,6 +12,7 @@ class MainViewModel: MainViewModelProtocol {
 	
 	//MARK: - PROPERTY
 	var networkService: GettingHotelProtocol = NetworkService()
+	var animations = Animations()
 	var hotels: [Hotel] = []
 	
 	//MARK: - ACTIONS
@@ -26,6 +27,19 @@ class MainViewModel: MainViewModelProtocol {
 				completion()
 			}
 		}
+	}
+	
+	func sorted(tag: Int) {
+		switch tag {
+		case 0: hotels.sort { $1.stars < $0.stars }
+		case 1: hotels.sort { $1.distance > $0.distance }
+		case 2: hotels.sort { $1.suitesArray.count < $0.suitesArray.count }
+		default: print("check buttonSortName in MainView")
+		}
+	}
+	
+	func sortAllert() {
+	print(#function)
 	}
 	
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {

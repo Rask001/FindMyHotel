@@ -12,7 +12,10 @@ protocol MainViewModelProtocol {
 	var hotels: [Hotel] { get }
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: GettingHotelProtocol { get }
+	var animations: Animations { get }
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
+	func sortAllert()
+	func sorted(tag: Int)
 	
 }

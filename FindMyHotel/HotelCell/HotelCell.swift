@@ -113,7 +113,7 @@ final class HotelCell: UITableViewCell {
 	}
 	
 	private func setupSuitsAvalibaleCount() {
-		
+		self.suitsAvalibaleCount.numberOfLines = 0
 	}
 	
 	private func setupImageView() {
