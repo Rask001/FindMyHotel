@@ -26,7 +26,11 @@ class HotelCellViewModel: HotelCellVMProtocol {
 	}
 	
 	var suitsAvalibaleCount: String {
-		"Only \(hotel.suitesArray.count) rooms left"
+		if hotel.suitesArray.count > 1 {
+		return "Only \(hotel.suitesArray.count) rooms left"
+		} else {
+		return "Only \(hotel.suitesArray.count) room left"
+		}
 	}
 	
 	var hotelName: String {

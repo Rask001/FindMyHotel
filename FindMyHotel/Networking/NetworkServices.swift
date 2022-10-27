@@ -15,6 +15,9 @@ protocol GettingHotelProtocol {
 }
 
 class NetworkService: GettingHotelProtocol {
+	static let shared = NetworkService() //использую только для загрузки картинки из кэша в detailVC (тк локально созданный убиваеться)
+	var cache = NSCache<AnyObject, UIImage>()
+	
 	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ()) {
 		request(url: url) { (result: Result<Hotel, Error>) in
 			switch result {
@@ -65,17 +68,13 @@ class NetworkService: GettingHotelProtocol {
 			}
 		}.resume()
 	}
-	
-	lazy var cahedataSource: NSCache<AnyObject, UIImage> = {
-			let cache = NSCache<AnyObject, UIImage>()
-			return cache
-		}()
 		
 	func imageDownloadAndCahed(result: Result<Hotel, Error>, completion: @escaping (UIImage) -> Void) {
 		switch result {
 		case .success(let data):
 			guard let imageId = data.image else { print("error Data"); return }
-			if let image = self.cahedataSource.object(forKey: "\(imageId)" as AnyObject) {
+			
+			if let image = self.cache.object(forKey: "\(imageId)" as AnyObject) {
 				completion(image)
 				
 			} else {
@@ -84,7 +83,7 @@ class NetworkService: GettingHotelProtocol {
 				let task = session.dataTask(with: url) { data, _, error in
 					guard let data = data, error == nil else { return }
 					if let image = UIImage(data: data) {
-						self.cahedataSource.setObject(image, forKey: "\(imageId)" as AnyObject)
+						self.cache.setObject(image, forKey: "\(imageId)" as AnyObject)
 						completion(image)
 					}
 				}

@@ -36,15 +36,15 @@ class DetailViewModel: DetailViewModelProtocol {
 	}
 	
 	//MARK: - ACTIONS
+	
 	func fetchImage(completion: @escaping (UIImage) -> Void) {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
-			guard let self else { return }
-			self.networkService.imageDownloadAndCahed(result: result) { image in
+		NetworkService.shared.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+			NetworkService.shared.imageDownloadAndCahed(result: result) { image in
 				completion(image)
 			}
 		}
 	}
-	
+
 	func fetchHotelForDetailView(completion: @escaping () -> Void) {
 		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
 			switch result {
@@ -57,10 +57,6 @@ class DetailViewModel: DetailViewModelProtocol {
 			}
 		}
 	}
-	
-//	func formatSuites() -> String {
-//		
-//	}
 	
 	func numberOfRows() -> Int {
 		hotel.suitesArray.count
