@@ -22,6 +22,7 @@ class DetailView: UIViewController {
 	
 	//MARK: - PROPERTY
 	private let imageView = UIImageView()
+	private let mapViewImage = UIImageView()
 	private var spinnerView = UIView()
 	private var spinner = UIActivityIndicatorView()
 	private var stackView = UIStackView()
@@ -38,6 +39,7 @@ class DetailView: UIViewController {
 		super.viewDidLoad()
 		setupImageView()
 		setupStackView()
+		setupMapView()
 		setupSpinner()
 		setupHotelName()
 		setupHotelAdress()
@@ -104,6 +106,11 @@ class DetailView: UIViewController {
 		self.imageView.image = Constants.imageHotel
 	}
 	
+	private func setupMapView() {
+		self.mapViewImage.backgroundColor = .white
+		self.mapViewImage.layer.cornerRadius = 7
+	}
+	
 	private func setHotel() {
 		self.title = self.viewModel.hotelName
 		self.suitsAvalibale.text = self.viewModel.hotel.suites
@@ -132,6 +139,7 @@ class DetailView: UIViewController {
 	private func addSubview() {
 		self.view.backgroundColor = .systemGray5
 		self.view.addSubview(self.imageView)
+		self.view.addSubview(self.mapViewImage)
 		self.view.addSubview(self.stackView)
 		self.view.addSubview(self.spinnerView)
 		self.spinnerView.addSubview(self.spinner)
@@ -142,13 +150,20 @@ class DetailView: UIViewController {
 		self.imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
 		self.imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
 		self.imageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-		self.imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+		self.imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+		
+		self.mapViewImage.translatesAutoresizingMaskIntoConstraints = false
+		self.mapViewImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+		self.mapViewImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+		self.mapViewImage.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20).isActive = true
+		self.mapViewImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
+		//self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
 		
 		self.stackView.translatesAutoresizingMaskIntoConstraints = false
 		self.stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
 		self.stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-		self.stackView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20).isActive = true
-		self.stackView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+		self.stackView.topAnchor.constraint(equalTo: self.mapViewImage.bottomAnchor, constant: 20).isActive = true
+		self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
 		
 		self.spinnerView.translatesAutoresizingMaskIntoConstraints = false
 		self.spinnerView.leadingAnchor.constraint(equalTo: self.imageView.trailingAnchor).isActive = true

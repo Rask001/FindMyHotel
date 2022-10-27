@@ -28,4 +28,11 @@ class ModuleBuilder: BuilderProtocol {
 		view.viewModel = viewModel
 		return view
 	}
+	
+	static func createMapView(lat: Double, lon: Double) -> UIViewController {
+		let view = MapView()
+		let viewModel = MapViewModel(lat: lat, lon: lon)
+		view.viewModel = viewModel
+		return view
+	}
 }
