@@ -9,12 +9,28 @@ import Foundation
 import UIKit
 
 class DetailViewModel: DetailViewModelProtocol {
-	
+
 	//MARK: - PROPERTY
 	var networkService: GettingHotelProtocol = NetworkService()
 	var hotel: Hotel
+	var lat: Double?
+	var lon: Double?
+	
 	required init(hotel: Hotel) {
 		self.hotel = hotel
+		setLonLat()
+	}
+	
+	private func setLonLat() {
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+			switch result {
+			case .success(let data):
+				self.lon = data.lon ?? 0.0
+				self.lat = data.lat ?? 0.0
+			case .failure(_):
+				print(Errors.incorrectUrl)
+			}
+		}
 	}
 	
 	var hotelAdress: String {
@@ -51,6 +67,7 @@ class DetailViewModel: DetailViewModelProtocol {
 				completion()
 			case .failure(let error):
 				print(error.localizedDescription)
+				print(Errors.incorrectData)
 				completion()
 			}
 		}

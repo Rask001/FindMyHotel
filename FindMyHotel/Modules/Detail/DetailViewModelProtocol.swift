@@ -14,9 +14,10 @@ protocol DetailViewModelProtocol {
 	var hotelAdress: String { get }
 	var distance: String { get }
 	var stars: String { get }
+	var lat: Double? { get }
+	var lon: Double? { get }
 	var networkService: GettingHotelProtocol { get }
 	func fetchImage(completion: @escaping(UIImage) -> Void)
 	func fetchHotelForDetailView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
-	
 }

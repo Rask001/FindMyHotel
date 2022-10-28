@@ -38,10 +38,6 @@ class MainViewModel: MainViewModelProtocol {
 		}
 	}
 	
-	func sortAllert() {
-	print(#function)
-	}
-	
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
 		let hotel = hotels[indexPath.row]
 		return HotelCellViewModel(hotel: hotel)

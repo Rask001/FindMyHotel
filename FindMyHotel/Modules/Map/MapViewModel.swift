@@ -8,12 +8,6 @@
 import Foundation
 import UIKit
 
-protocol MapViewModelProtocol {
-	var lat: Double { get }
-	var lon: Double { get }
-}
-
-
 class MapViewModel: MapViewModelProtocol {
 	
 	//MARK: - PROPERTY
@@ -24,8 +18,4 @@ class MapViewModel: MapViewModelProtocol {
 		self.lat = lat
 		self.lon = lon
 	}
-	
-	//MARK: - ACTIONS
-	
-
 }

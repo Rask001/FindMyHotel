@@ -17,7 +17,6 @@ protocol GettingHotelProtocol {
 class NetworkService: GettingHotelProtocol {
 	static let shared = NetworkService() //использую только для загрузки картинки из кэша в detailVC (тк локально созданный убиваеться)
 	var cache = NSCache<AnyObject, UIImage>()
-	
 	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ()) {
 		request(url: url) { (result: Result<Hotel, Error>) in
 			switch result {
@@ -40,19 +39,9 @@ class NetworkService: GettingHotelProtocol {
 		}
 	}
 	
-	
 	private func request<T: Decodable>(url: URL, completion: @escaping(Result<T, Error>) -> Void) {
 		URLSession.shared.dataTask(with: url) { data, _, error in
-			guard let data = data else {
-				if let error = error {
-					DispatchQueue.main.async {
-						completion(.failure(error)) //fix error
-						print("check the input Data1")
-					}
-				}
-				return
-			}
-			
+			guard let data = data else { return }
 			do {
 				let decoder = JSONDecoder()
 				decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -62,8 +51,7 @@ class NetworkService: GettingHotelProtocol {
 				}
 			} catch {
 				DispatchQueue.main.async {
-					completion(.failure(error))//fix error
-					print("check the input Data2")
+					completion(.failure(Errors.incorrectData))
 				}
 			}
 		}.resume()
@@ -72,11 +60,10 @@ class NetworkService: GettingHotelProtocol {
 	func imageDownloadAndCahed(result: Result<Hotel, Error>, completion: @escaping (UIImage) -> Void) {
 		switch result {
 		case .success(let data):
-			guard let imageId = data.image else { print("error Data"); return }
+			guard let imageId = data.image else { return }
 			
 			if let image = self.cache.object(forKey: "\(imageId)" as AnyObject) {
 				completion(image)
-				
 			} else {
 				let url: URL = .getImageUrl(withImageId: imageId)
 				let session = URLSession(configuration: .default)
@@ -90,7 +77,9 @@ class NetworkService: GettingHotelProtocol {
 				task.resume()
 			}
 		case .failure(let error):
-			print(error.localizedDescription)
+			print(error.localizedDescription,
+			Errors.incorrectUrl)
+			return
 		}
 	}
 }

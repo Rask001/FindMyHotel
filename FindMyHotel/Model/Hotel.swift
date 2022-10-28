@@ -15,8 +15,8 @@ struct Hotel: Decodable {
 	let distance: Double
 	var image: String?
 	let suitesAvailability: String
-	let lat: Double?
-	let lon: Double?
+	var lat: Double?
+	var lon: Double?
 	
 	var suites: String {
 		let suites: String

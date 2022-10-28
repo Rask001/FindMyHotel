@@ -15,7 +15,5 @@ protocol MainViewModelProtocol {
 	var animations: Animations { get }
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
-	func sortAllert()
 	func sorted(tag: Int)
-	
 }

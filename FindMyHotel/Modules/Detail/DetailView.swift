@@ -31,6 +31,7 @@ class DetailView: UIViewController {
 	private let stars = UILabel()
 	private let distance = UILabel()
 	private let suitsAvalibale = UILabel()
+	private var tapGesture: UITapGestureRecognizer!
 	var viewModel: DetailViewModelProtocol!
 	
 	
@@ -107,8 +108,22 @@ class DetailView: UIViewController {
 	}
 	
 	private func setupMapView() {
+		self.tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnMap(sender:)))
+		self.mapViewImage.addGestureRecognizer(tapGesture)
 		self.mapViewImage.backgroundColor = .white
 		self.mapViewImage.layer.cornerRadius = 7
+		self.mapViewImage.contentMode = .scaleAspectFill
+		self.mapViewImage.clipsToBounds = true
+		self.mapViewImage.isUserInteractionEnabled = true
+		self.mapViewImage.image = UIImage(named: "Map")
+	}
+	
+	@objc func tapOnMap(sender: UITapGestureRecognizer) {
+		print(#function)
+		guard let lat = self.viewModel.lat else { return }
+		guard let lon = self.viewModel.lon else { return }
+		let mapView = ModuleBuilder.createMapView(lat: lat, lon: lon)
+		navigationController?.show(mapView, sender: self)
 	}
 	
 	private func setHotel() {
@@ -157,7 +172,6 @@ class DetailView: UIViewController {
 		self.mapViewImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
 		self.mapViewImage.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20).isActive = true
 		self.mapViewImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
-		//self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
 		
 		self.stackView.translatesAutoresizingMaskIntoConstraints = false
 		self.stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
