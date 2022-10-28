@@ -13,7 +13,7 @@ protocol GettingHotelProtocol {
 	func fetchHotelsArray(url: URL, completion: @escaping (Result<[Hotel], Error>) -> Void)
 }
 
-class NetworkService: GettingHotelProtocol {
+final class NetworkService: GettingHotelProtocol {
 	static let shared = NetworkService() //использую только для загрузки картинки из кэша в detailVC (тк локально созданный убиваеться)
 	
 	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ()) {

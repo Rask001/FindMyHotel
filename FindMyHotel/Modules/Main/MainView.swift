@@ -13,7 +13,6 @@ fileprivate enum Constants {
 	static var btnBGColor = UIColor.white
 }
 
-
 //MARK: - VIEW
 final class MainView: UIViewController {
 	

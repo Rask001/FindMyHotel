@@ -188,7 +188,6 @@ class DetailView: UIViewController {
 		self.tapLabel.topAnchor.constraint(equalTo: self.mapViewImage.topAnchor, constant: 10).isActive = true
 		self.tapLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
 		
-		
 		self.stackView.translatesAutoresizingMaskIntoConstraints = false
 		self.stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
 		self.stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true

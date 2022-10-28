@@ -124,12 +124,12 @@
 		3AFE7F512907EBC000B292A7 /* FindMyHotel */ = {
 			isa = PBXGroup;
 			children = (
-				3AFE7F7529085B9D00B292A7 /* Helpers */,
-				3AFE7F6E290838B600B292A7 /* Application */,
-				3AFE7F6F290838FC00B292A7 /* Modules */,
 				3AFE7F6D290833BD00B292A7 /* Model */,
+				3AFE7F6F290838FC00B292A7 /* Modules */,
 				3AFE7F6A29082F9000B292A7 /* HotelCell */,
 				3AFE7F722908398200B292A7 /* Networking */,
+				3AFE7F7529085B9D00B292A7 /* Helpers */,
+				3AFE7F6E290838B600B292A7 /* Application */,
 			);
 			path = FindMyHotel;
 			sourceTree = "<group>";

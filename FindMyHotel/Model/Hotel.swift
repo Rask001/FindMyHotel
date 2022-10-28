@@ -33,8 +33,8 @@ struct Hotel: Decodable {
 	}
 	
 	var suitesArray: [Int] {
-				let transform = suitesAvailability.components(separatedBy: ":").compactMap(Int.init)
-				return transform
-			}
+		let transform = suitesAvailability.components(separatedBy: ":").compactMap(Int.init)
+		return transform
 	}
+}
 

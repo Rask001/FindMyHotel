@@ -56,6 +56,7 @@ class MapView: UIViewController {
 	}
 }
 
+//MARK: - EXTENSION
 extension MapView: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		guard !(annotation is MKUserLocation) else { return nil }
@@ -73,4 +74,4 @@ extension MapView: MKMapViewDelegate {
 	}
 }
 
-	
+

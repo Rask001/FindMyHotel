@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HotelCellViewModel: HotelCellVMProtocol {
+final class HotelCellViewModel: HotelCellVMProtocol {
 	
 	//MARK: - PROPERTY
 	var networkService: GettingHotelProtocol = NetworkService()
