@@ -31,6 +31,7 @@ class DetailView: UIViewController {
 	private let stars = UILabel()
 	private let distance = UILabel()
 	private let suitsAvalibale = UILabel()
+	private let tapLabel = UILabel()
 	private var tapGesture: UITapGestureRecognizer!
 	var viewModel: DetailViewModelProtocol!
 	
@@ -114,8 +115,16 @@ class DetailView: UIViewController {
 		self.mapViewImage.layer.cornerRadius = 7
 		self.mapViewImage.contentMode = .scaleAspectFill
 		self.mapViewImage.clipsToBounds = true
+		self.mapViewImage.layer.borderWidth = 3
+		self.mapViewImage.layer.borderColor = UIColor.white.cgColor
 		self.mapViewImage.isUserInteractionEnabled = true
 		self.mapViewImage.image = UIImage(named: "Map")
+		self.tapLabel.textAlignment = .center
+		self.tapLabel.backgroundColor = .white
+		self.tapLabel.clipsToBounds = true
+		self.tapLabel.layer.cornerRadius = 5
+		self.tapLabel.text = "Open map"
+		self.tapLabel.font = Constants.distanceNameFont
 	}
 	
 	@objc func tapOnMap(sender: UITapGestureRecognizer) {
@@ -157,6 +166,7 @@ class DetailView: UIViewController {
 		self.view.addSubview(self.mapViewImage)
 		self.view.addSubview(self.stackView)
 		self.view.addSubview(self.spinnerView)
+		self.mapViewImage.addSubview(tapLabel)
 		self.spinnerView.addSubview(self.spinner)
 	}
 	
@@ -172,6 +182,12 @@ class DetailView: UIViewController {
 		self.mapViewImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
 		self.mapViewImage.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20).isActive = true
 		self.mapViewImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
+		
+		self.tapLabel.translatesAutoresizingMaskIntoConstraints = false
+		self.tapLabel.leadingAnchor.constraint(equalTo: self.mapViewImage.leadingAnchor, constant: 10).isActive = true
+		self.tapLabel.topAnchor.constraint(equalTo: self.mapViewImage.topAnchor, constant: 10).isActive = true
+		self.tapLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+		
 		
 		self.stackView.translatesAutoresizingMaskIntoConstraints = false
 		self.stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true

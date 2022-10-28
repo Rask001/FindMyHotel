@@ -97,14 +97,14 @@ final class MainView: UIViewController {
 	}
 	
 	private func setupNavigation() {
-			let leftButtonItem = UIBarButtonItem(
-				title: "⇅ Sort",
-				style: .done,
-				target: self,
-				action: #selector(sortBtnAction)
-			)
-			self.navigationItem.leftBarButtonItem = leftButtonItem
-			self.navigationItem.leftBarButtonItem?.tintColor = .black
+		let leftButtonItem = UIBarButtonItem(
+			title: "⇅ Sort",
+			style: .done,
+			target: self,
+			action: #selector(sortBtnAction)
+		)
+		self.navigationItem.leftBarButtonItem = leftButtonItem
+		self.navigationItem.leftBarButtonItem?.tintColor = .black
 	}
 	
 	@objc func tapToSort(sender: UIButton) {
@@ -147,17 +147,21 @@ final class MainView: UIViewController {
 	}
 }
 
-//MARK: - EXTENSION
-extension MainView: UITableViewDelegate, UITableViewDataSource {
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		self.viewModel.hotels.count
-	}
+//MARK: - EXTENSION UITableViewDataSource
+extension MainView: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath) as! HotelCell
 		cell.viewModel = viewModel.cellViewModel(indexPath: indexPath)
 		return cell
+	}
+}
+
+//MARK: - EXTENSION UITableViewDelegate
+extension MainView: UITableViewDelegate {
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		self.viewModel.hotels.count
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
