@@ -53,7 +53,7 @@ class DetailViewModel: DetailViewModelProtocol {
 	
 	func fetchImage(completion: @escaping (UIImage) -> Void) {
 		NetworkService.shared.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
-			NetworkService.shared.imageDownloadAndCahed(result: result) { image in
+			ImageDownloader.shared.imageDownloadAndCahed(result: result) { image in
 				completion(image)
 			}
 		}

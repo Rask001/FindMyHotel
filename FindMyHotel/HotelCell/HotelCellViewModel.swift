@@ -43,9 +43,8 @@ class HotelCellViewModel: HotelCellVMProtocol {
 	
 	//MARK: - ACTIONS
 	func fetchImage(completion: @escaping (UIImage) -> Void) {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
-			guard let self else { return }
-			self.networkService.imageDownloadAndCahed(result: result) { image in
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+			ImageDownloader.shared.imageDownloadAndCahed(result: result) { image in
 				completion(image)
 			}
 		}

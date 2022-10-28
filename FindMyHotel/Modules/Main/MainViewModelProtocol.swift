@@ -8,7 +8,6 @@
 import Foundation
 
 protocol MainViewModelProtocol {
-	
 	var hotels: [Hotel] { get }
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: GettingHotelProtocol { get }

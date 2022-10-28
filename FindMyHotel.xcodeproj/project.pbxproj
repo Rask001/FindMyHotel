@@ -19,6 +19,7 @@
 		3A84F4E7290AB77200CEAE50 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4E6290AB77200CEAE50 /* MapViewModel.swift */; };
 		3A84F4E9290AB78D00CEAE50 /* MapViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4E8290AB78D00CEAE50 /* MapViewModelProtocol.swift */; };
 		3A84F4EB290B32C600CEAE50 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4EA290B32C600CEAE50 /* Error.swift */; };
+		3A84F4ED290BD76500CEAE50 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4EC290BD76500CEAE50 /* ImageDownloader.swift */; };
 		3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F522907EBC000B292A7 /* AppDelegate.swift */; };
 		3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */; };
 		3AFE7F572907EBC000B292A7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F562907EBC000B292A7 /* MainView.swift */; };
@@ -46,6 +47,7 @@
 		3A84F4E6290AB77200CEAE50 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		3A84F4E8290AB78D00CEAE50 /* MapViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModelProtocol.swift; sourceTree = "<group>"; };
 		3A84F4EA290B32C600CEAE50 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		3A84F4EC290BD76500CEAE50 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		3AFE7F4F2907EBC000B292A7 /* FindMyHotel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMyHotel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFE7F522907EBC000B292A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				3AFE7F702908397B00B292A7 /* NetworkServices.swift */,
+				3A84F4EC290BD76500CEAE50 /* ImageDownloader.swift */,
 				3AFE7F7829093EE400B292A7 /* UrlServiceExt.swift */,
 				3A84F4EA290B32C600CEAE50 /* Error.swift */,
 			);
@@ -266,6 +269,7 @@
 				3A84F4E02909B77A00CEAE50 /* MainViewModelProtocol.swift in Sources */,
 				3AFE7F6C290833B800B292A7 /* Hotel.swift in Sources */,
 				3AFE7F572907EBC000B292A7 /* MainView.swift in Sources */,
+				3A84F4ED290BD76500CEAE50 /* ImageDownloader.swift in Sources */,
 				3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */,
 				3A84F4DE2909B75100CEAE50 /* DetailViewModelProtocol.swift in Sources */,
 				3AFE7F6929082F8900B292A7 /* HotelCellViewModel.swift in Sources */,
