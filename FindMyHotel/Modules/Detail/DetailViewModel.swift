@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class DetailViewModel: DetailViewModelProtocol {
+final class DetailViewModel: DetailViewModelProtocol {
 
 	//MARK: - PROPERTY
 	var networkService: GettingHotelProtocol = NetworkService()
@@ -22,7 +22,8 @@ class DetailViewModel: DetailViewModelProtocol {
 	}
 	
 	private func setLonLat() {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
+			guard let self else { return }
 			switch result {
 			case .success(let data):
 				self.lon = data.lon ?? 0.0
@@ -60,7 +61,8 @@ class DetailViewModel: DetailViewModelProtocol {
 	}
 
 	func fetchHotelForDetailView(completion: @escaping () -> Void) {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
+			guard let self else { return }
 			switch result {
 			case .success(let data):
 				self.hotel = data

@@ -9,16 +9,18 @@ import Foundation
 
 import UIKit
 
-//MARK: - CONSTANTS
-fileprivate enum Constants {
-	static var hotelNameFont: UIFont { UIFont(name: "Helvetica Neue Medium", size: 20)!}
-	static var distanceNameFont: UIFont { UIFont(name: "Helvetica Neue", size: 16)!}
-	static var starsSize: UIFont { UIFont(name: "Helvetica Neue", size: 28)!}
-	static var imageHotel =	UIImage(named: "Hotel")
-}
-
 //MARK: - VIEW
 class DetailView: UIViewController {
+	
+	//MARK: - CONSTANTS
+	private enum Constants {
+		static var hotelNameFont: UIFont { UIFont(name: "Helvetica Neue Medium", size: 20)!}
+		static var distanceNameFont: UIFont { UIFont(name: "Helvetica Neue", size: 16)!}
+		static var starsSize: UIFont { UIFont(name: "Helvetica Neue", size: 28)!}
+		static var imageHotel =	UIImage(named: "Hotel")
+		static var mapImage =	UIImage(named: "Map")
+		static var mapLabelText = "Open map"
+	}
 	
 	//MARK: - PROPERTY
 	private let imageView = UIImageView()
@@ -42,12 +44,12 @@ class DetailView: UIViewController {
 		setupImageView()
 		setupStackView()
 		setupMapView()
+		setupTapLabel()
 		setupSpinner()
 		setupHotelName()
 		setupHotelAdress()
 		setupStarsLabel()
 		setupDistance()
-		setupSuitsAvalibale()
 		setHotel()
 		setImage()
 		addSubview()
@@ -57,13 +59,13 @@ class DetailView: UIViewController {
 	//MARK: - SETUP
 	private func setupStackView() {
 		let arrayForStackView = [hotelName, stars, suitsAvalibale, distance, hotelAdress]
-		self.stackView = UIStackView(arrangedSubviews: arrayForStackView)
-		self.stackView.axis = .vertical
-		self.stackView.spacing = 10
-		self.stackView.alignment = .center
-		self.stackView.backgroundColor = .white
-		self.stackView.layer.cornerRadius = 7
-		self.stackView.distribution = .fillEqually
+		stackView = UIStackView(arrangedSubviews: arrayForStackView)
+		stackView.axis = .vertical
+		stackView.spacing = 10
+		stackView.alignment = .center
+		stackView.backgroundColor = .white
+		stackView.layer.cornerRadius = 7
+		stackView.distribution = .fillEqually
 	}
 	
 	private func setupSpinner() {
@@ -76,15 +78,15 @@ class DetailView: UIViewController {
 	}
 	
 	private func setupHotelName() {
-		self.hotelName.font = Constants.hotelNameFont
-		self.hotelName.numberOfLines = 0
-		self.hotelName.adjustsFontSizeToFitWidth = true
+		hotelName.font = Constants.hotelNameFont
+		hotelName.numberOfLines = 0
+		hotelName.adjustsFontSizeToFitWidth = true
 	}
 	
 	private func setupHotelAdress() {
-		self.hotelAdress.numberOfLines = 0
-		self.hotelAdress.textAlignment = .center
-		self.hotelAdress.adjustsFontSizeToFitWidth = true
+		hotelAdress.numberOfLines = 0
+		hotelAdress.textAlignment = .center
+		hotelAdress.adjustsFontSizeToFitWidth = true
 	}
 	
 	private func setupStarsLabel() {
@@ -93,59 +95,57 @@ class DetailView: UIViewController {
 	}
 	
 	private func setupDistance() {
-		self.distance.textColor = .systemGray
-		self.distance.font = Constants.distanceNameFont
-	}
-	
-	private func setupSuitsAvalibale() {
-		
+		distance.textColor = .systemGray
+		distance.font = Constants.distanceNameFont
 	}
 	
 	private func setupImageView() {
-		self.imageView.contentMode = .scaleAspectFit
-		self.imageView.clipsToBounds = true
-		self.imageView.alpha = 0
-		self.imageView.image = Constants.imageHotel
+		imageView.contentMode = .scaleAspectFit
+		imageView.clipsToBounds = true
+		imageView.alpha = 0
+		imageView.image = Constants.imageHotel
 	}
 	
 	private func setupMapView() {
-		self.tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnMap(sender:)))
-		self.mapViewImage.addGestureRecognizer(tapGesture)
-		self.mapViewImage.backgroundColor = .white
-		self.mapViewImage.layer.cornerRadius = 7
-		self.mapViewImage.contentMode = .scaleAspectFill
-		self.mapViewImage.clipsToBounds = true
-		self.mapViewImage.layer.borderWidth = 3
-		self.mapViewImage.layer.borderColor = UIColor.white.cgColor
-		self.mapViewImage.isUserInteractionEnabled = true
-		self.mapViewImage.image = UIImage(named: "Map")
-		self.tapLabel.textAlignment = .center
-		self.tapLabel.backgroundColor = .white
-		self.tapLabel.clipsToBounds = true
-		self.tapLabel.layer.cornerRadius = 5
-		self.tapLabel.text = "Open map"
-		self.tapLabel.font = Constants.distanceNameFont
+		tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnMap(sender:)))
+		mapViewImage.addGestureRecognizer(tapGesture)
+		mapViewImage.backgroundColor = .white
+		mapViewImage.layer.cornerRadius = 7
+		mapViewImage.contentMode = .scaleAspectFill
+		mapViewImage.clipsToBounds = true
+		mapViewImage.layer.borderWidth = 3
+		mapViewImage.layer.borderColor = UIColor.white.cgColor
+		mapViewImage.isUserInteractionEnabled = true
+		mapViewImage.image = Constants.mapImage
+	}
+	private func setupTapLabel() {
+		tapLabel.textAlignment = .center
+		tapLabel.backgroundColor = .white
+		tapLabel.clipsToBounds = true
+		tapLabel.layer.cornerRadius = 5
+		tapLabel.text = Constants.mapLabelText
+		tapLabel.font = Constants.distanceNameFont
 	}
 	
 	@objc func tapOnMap(sender: UITapGestureRecognizer) {
 		print(#function)
-		guard let lat = self.viewModel.lat else { return }
-		guard let lon = self.viewModel.lon else { return }
+		guard let lat = viewModel.lat else { return }
+		guard let lon = viewModel.lon else { return }
 		let mapView = ModuleBuilder.createMapView(lat: lat, lon: lon)
 		navigationController?.show(mapView, sender: self)
 	}
 	
 	private func setHotel() {
-		self.title = self.viewModel.hotelName
-		self.suitsAvalibale.text = self.viewModel.hotel.suites
-		self.hotelName.text = self.viewModel.hotelName
-		self.hotelAdress.text = self.viewModel.hotelAdress
-		self.distance.text = self.viewModel.distance
-		self.stars.text = self.viewModel.stars
+		title = viewModel.hotelName
+		suitsAvalibale.text = viewModel.hotel.suites
+		hotelName.text = viewModel.hotelName
+		hotelAdress.text = viewModel.hotelAdress
+		distance.text = viewModel.distance
+		stars.text = viewModel.stars
 	}
 	
 	private func setImage() {
-		self.viewModel.fetchImage { [weak self] image in
+		viewModel.fetchImage { [weak self] image in
 			guard let self else { return }
 			let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.9, height: 0.9))
 			DispatchQueue.main.async {
@@ -158,50 +158,53 @@ class DetailView: UIViewController {
 			}
 		}
 	}
+}
+
+//MARK: - LAYOUT
+private extension DetailView {
 	
-	//MARK: - LAYOUT
-	private func addSubview() {
-		self.view.backgroundColor = .systemGray5
-		self.view.addSubview(self.imageView)
-		self.view.addSubview(self.mapViewImage)
-		self.view.addSubview(self.stackView)
-		self.view.addSubview(self.spinnerView)
-		self.mapViewImage.addSubview(tapLabel)
-		self.spinnerView.addSubview(self.spinner)
+	func addSubview() {
+		view.backgroundColor = .systemGray5
+		view.addSubview(imageView)
+		view.addSubview(mapViewImage)
+		view.addSubview(stackView)
+		view.addSubview(spinnerView)
+		mapViewImage.addSubview(tapLabel)
+		spinnerView.addSubview(spinner)
 	}
 	
-	private func layout() {
-		self.imageView.translatesAutoresizingMaskIntoConstraints = false
-		self.imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-		self.imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-		self.imageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-		self.imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+	func layout() {
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+		imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+		imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+		imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
 		
-		self.mapViewImage.translatesAutoresizingMaskIntoConstraints = false
-		self.mapViewImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-		self.mapViewImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-		self.mapViewImage.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20).isActive = true
-		self.mapViewImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
+		mapViewImage.translatesAutoresizingMaskIntoConstraints = false
+		mapViewImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+		mapViewImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+		mapViewImage.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true
+		mapViewImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
 		
-		self.tapLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.tapLabel.leadingAnchor.constraint(equalTo: self.mapViewImage.leadingAnchor, constant: 10).isActive = true
-		self.tapLabel.topAnchor.constraint(equalTo: self.mapViewImage.topAnchor, constant: 10).isActive = true
-		self.tapLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+		tapLabel.translatesAutoresizingMaskIntoConstraints = false
+		tapLabel.leadingAnchor.constraint(equalTo: mapViewImage.leadingAnchor, constant: 10).isActive = true
+		tapLabel.topAnchor.constraint(equalTo: mapViewImage.topAnchor, constant: 10).isActive = true
+		tapLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
 		
-		self.stackView.translatesAutoresizingMaskIntoConstraints = false
-		self.stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-		self.stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-		self.stackView.topAnchor.constraint(equalTo: self.mapViewImage.bottomAnchor, constant: 20).isActive = true
-		self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+		stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+		stackView.topAnchor.constraint(equalTo: mapViewImage.bottomAnchor, constant: 20).isActive = true
+		stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
 		
-		self.spinnerView.translatesAutoresizingMaskIntoConstraints = false
-		self.spinnerView.leadingAnchor.constraint(equalTo: self.imageView.trailingAnchor).isActive = true
-		self.spinnerView.topAnchor.constraint(equalTo: self.imageView.topAnchor).isActive = true
-		self.spinnerView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
-		self.spinnerView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor).isActive = true
+		spinnerView.translatesAutoresizingMaskIntoConstraints = false
+		spinnerView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
+		spinnerView.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
+		spinnerView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
+		spinnerView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
 		
-		self.spinner.translatesAutoresizingMaskIntoConstraints = false
-		self.spinner.centerXAnchor.constraint(equalTo: self.imageView.centerXAnchor).isActive = true
-		self.spinner.centerYAnchor.constraint(equalTo: self.imageView.centerYAnchor).isActive = true
+		spinner.translatesAutoresizingMaskIntoConstraints = false
+		spinner.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+		spinner.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
 	}
 }

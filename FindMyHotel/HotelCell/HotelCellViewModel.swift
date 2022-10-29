@@ -14,7 +14,7 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 	var networkService: GettingHotelProtocol = NetworkService()
 	let hotel: Hotel
 	required init(hotel: Hotel) {
-		self.hotel = hotel
+		hotel = hotel
 	}
 	
 	var hotelAdress: String {
@@ -27,9 +27,9 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 	
 	var suitsAvalibaleCount: String {
 		if hotel.suitesArray.count > 1 {
-		return "Only \(hotel.suitesArray.count) rooms left"
+			return "Only \(hotel.suitesArray.count) rooms left"
 		} else {
-		return "Only \(hotel.suitesArray.count) room left"
+			return "Only \(hotel.suitesArray.count) room left"
 		}
 	}
 	
@@ -47,7 +47,8 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 			ImageDownloader.shared.imageDownloadAndCahed(result: result) { image in
 				completion(image)
 			}
+			
 		}
 	}
+	
 }
-

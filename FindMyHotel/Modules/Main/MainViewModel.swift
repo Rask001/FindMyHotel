@@ -21,7 +21,7 @@ class MainViewModel: MainViewModelProtocol {
 			switch result {
 			case .success(let data):
 				self.hotels = data
-				completion()
+				completion() // TODO: reload on main
 			case .failure(let error):
 				print(error.localizedDescription)
 				completion()
@@ -37,6 +37,8 @@ class MainViewModel: MainViewModelProtocol {
 		default: print("check buttonSortName in MainView")
 		}
 	}
+	
+	
 	
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
 		let hotel = hotels[indexPath.row]

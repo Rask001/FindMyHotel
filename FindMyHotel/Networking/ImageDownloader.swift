@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 final class ImageDownloader {
-	
+
 	//MARK: - PROPERTY
 	static let shared = ImageDownloader()
 	lazy var cache = NSCache<AnyObject, UIImage>()
-	
+
 	//MARK: - METHODS
 	func imageDownloadAndCahed(result: Result<Hotel, Error>, completion: @escaping (UIImage) -> Void) {
 		guard let imageDefault = UIImage(named: "Hotel") else { print(Errors.defaulImageIsNil); return }

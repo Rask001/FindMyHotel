@@ -7,14 +7,15 @@
 
 import Foundation
 import UIKit
-//MARK: - CONSTANTS
-fileprivate enum Constants {
-	static var hotelNameFont: UIFont { UIFont(name: "Helvetica Neue Medium", size: 20)!}
-	static var distanceNameFont: UIFont { UIFont(name: "Helvetica Neue", size: 16)!}
-}
 
 //MARK: - VIEW
 final class HotelCell: UITableViewCell {
+	
+	//MARK: - CONSTANTS
+	private enum Constants {
+		static var hotelNameFont: UIFont { UIFont(name: "Helvetica Neue Medium", size: 20)!}
+		static var distanceNameFont: UIFont { UIFont(name: "Helvetica Neue", size: 16)!}
+	}
 	
 	//MARK: - PROPERTY
 	static let identifire = "HotelCell"
@@ -40,7 +41,7 @@ final class HotelCell: UITableViewCell {
 				guard let self else { return }
 				let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.99, height: 0.9))
 				DispatchQueue.main.async {
-					UIView.animate(withDuration: 0.8) {
+					UIView.animate(withDuration: 0.3) {
 						self.myImageView.alpha = 1
 						self.spinnerView.alpha = 0
 						self.myImageView.image = croppedImg
@@ -75,11 +76,11 @@ final class HotelCell: UITableViewCell {
 	//MARK: - SETUP
 	private func setupStackView() {
 		let arrayForStackView = [hotelName, stars, suitsAvalibaleCount, distance, hotelAdress]
-		self.stackView = UIStackView(arrangedSubviews: arrayForStackView)
-		self.stackView.axis = .vertical
-		self.stackView.spacing = 10
-		self.stackView.backgroundColor = backgroundViewCell.backgroundColor
-		self.stackView.distribution = .fillEqually
+		stackView = UIStackView(arrangedSubviews: arrayForStackView)
+		stackView.axis = .vertical
+		stackView.spacing = 10
+		stackView.backgroundColor = backgroundViewCell.backgroundColor
+		stackView.distribution = .fillEqually
 	}
 	
 	private func setupSpinner() {
@@ -93,35 +94,35 @@ final class HotelCell: UITableViewCell {
 	}
 	
 	private func setupHotelName() {
-		self.hotelName.font = Constants.hotelNameFont
-		self.hotelName.numberOfLines = 0
-		self.hotelName.adjustsFontSizeToFitWidth = true
+		hotelName.font = Constants.hotelNameFont
+		hotelName.numberOfLines = 0
+		hotelName.adjustsFontSizeToFitWidth = true
 	}
 	
 	private func setupHotelAdress() {
-		self.hotelAdress.numberOfLines = 0
-		self.hotelAdress.adjustsFontSizeToFitWidth = true
+		hotelAdress.numberOfLines = 0
+		hotelAdress.adjustsFontSizeToFitWidth = true
 	}
 	
 	private func setupStarsLabel() {
-		self.stars.textColor = .systemYellow
+		stars.textColor = .systemYellow
 	}
 	
 	private func setupDistance() {
-		self.distance.textColor = .systemGray
-		self.distance.font = Constants.distanceNameFont
+		distance.textColor = .systemGray
+		distance.font = Constants.distanceNameFont
 	}
 	
 	private func setupSuitsAvalibaleCount() {
-		self.suitsAvalibaleCount.numberOfLines = 0
+		suitsAvalibaleCount.numberOfLines = 0
 	}
 	
 	private func setupImageView() {
-		self.myImageView.contentMode = .scaleAspectFill
-		self.myImageView.clipsToBounds = true
-		self.myImageView.alpha = 0
-		self.myImageView.layer.cornerRadius = 10
-		self.myImageView.image = UIImage(named: "Hotel")
+		myImageView.contentMode = .scaleAspectFill
+		myImageView.clipsToBounds = true
+		myImageView.alpha = 0
+		myImageView.layer.cornerRadius = 10
+		myImageView.image = UIImage(named: "Hotel")
 	}
 	
 	private func setupBackgroundViewCell() {
@@ -131,49 +132,52 @@ final class HotelCell: UITableViewCell {
 	}
 	
 	private func backgroundViewCellShadow() {
-		self.layer.shadowColor = UIColor.black.cgColor
-		self.layer.shadowRadius = 4
-		self.layer.shadowOpacity = 0.2
-		self.layer.shadowOffset = CGSize(width: 0, height: 3 )
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowRadius = 4
+		layer.shadowOpacity = 0.2
+		layer.shadowOffset = CGSize(width: 0, height: 3 )
 	}
-	
+}
+
+
 	//MARK: - LAYOUT
-	private func addSubviewAndConfigure() {
-		self.backgroundColor = .clear
-		self.contentView.addSubview(backgroundViewCell)
-		self.backgroundViewCell.addSubview(self.myImageView)
-		self.backgroundViewCell.addSubview(self.stackView)
-		self.backgroundViewCell.addSubview(self.spinnerView)
-		self.spinnerView.addSubview(self.spinner)
-	}
-	
-	internal func layout() {
-		self.backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
-		self.backgroundViewCell.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 7).isActive = true
-		self.backgroundViewCell.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -7).isActive = true
-		self.backgroundViewCell.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-		self.backgroundViewCell.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7).isActive = true
+	private extension HotelCell {
+		private func addSubviewAndConfigure() {
+			backgroundColor = .clear
+			contentView.addSubview(backgroundViewCell)
+			backgroundViewCell.addSubview(self.myImageView)
+			backgroundViewCell.addSubview(self.stackView)
+			backgroundViewCell.addSubview(self.spinnerView)
+			spinnerView.addSubview(self.spinner)
+		}
 		
-		self.myImageView.translatesAutoresizingMaskIntoConstraints = false
-		self.myImageView.leadingAnchor.constraint(equalTo: self.backgroundViewCell.leadingAnchor).isActive = true
-		self.myImageView.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor).isActive = true
-		self.myImageView.bottomAnchor.constraint(equalTo: self.backgroundViewCell.bottomAnchor).isActive = true
-		self.myImageView.widthAnchor.constraint(equalToConstant: self.bounds.width/2.5).isActive = true
-		
-		self.stackView.translatesAutoresizingMaskIntoConstraints = false
-		self.stackView.leadingAnchor.constraint(equalTo: self.myImageView.trailingAnchor, constant: 10).isActive = true
-		self.stackView.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor, constant: 20).isActive = true
-		self.stackView.bottomAnchor.constraint(equalTo: self.backgroundViewCell.bottomAnchor, constant: -20).isActive = true
-		self.stackView.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor, constant: -10).isActive = true
-		
-		self.spinnerView.translatesAutoresizingMaskIntoConstraints = false
-		self.spinnerView.leadingAnchor.constraint(equalTo: self.myImageView.trailingAnchor).isActive = true
-		self.spinnerView.topAnchor.constraint(equalTo: self.myImageView.topAnchor).isActive = true
-		self.spinnerView.bottomAnchor.constraint(equalTo: self.myImageView.bottomAnchor).isActive = true
-		self.spinnerView.trailingAnchor.constraint(equalTo: self.myImageView.trailingAnchor).isActive = true
-		
-		self.spinner.translatesAutoresizingMaskIntoConstraints = false
-		self.spinner.centerXAnchor.constraint(equalTo: self.myImageView.centerXAnchor).isActive = true
-		self.spinner.centerYAnchor.constraint(equalTo: self.myImageView.centerYAnchor).isActive = true
-	}
+		func layout() {
+			backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
+			backgroundViewCell.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 7).isActive = true
+			backgroundViewCell.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7).isActive = true
+			backgroundViewCell.topAnchor.constraint(equalTo: topAnchor).isActive = true
+			backgroundViewCell.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -7).isActive = true
+			
+			myImageView.translatesAutoresizingMaskIntoConstraints = false
+			myImageView.leadingAnchor.constraint(equalTo: backgroundViewCell.leadingAnchor).isActive = true
+			myImageView.topAnchor.constraint(equalTo: backgroundViewCell.topAnchor).isActive = true
+			myImageView.bottomAnchor.constraint(equalTo: backgroundViewCell.bottomAnchor).isActive = true
+			myImageView.widthAnchor.constraint(equalToConstant: bounds.width/2.5).isActive = true
+			
+			stackView.translatesAutoresizingMaskIntoConstraints = false
+			stackView.leadingAnchor.constraint(equalTo: myImageView.trailingAnchor, constant: 10).isActive = true
+			stackView.topAnchor.constraint(equalTo: backgroundViewCell.topAnchor, constant: 20).isActive = true
+			stackView.bottomAnchor.constraint(equalTo: backgroundViewCell.bottomAnchor, constant: -20).isActive = true
+			stackView.trailingAnchor.constraint(equalTo: backgroundViewCell.trailingAnchor, constant: -10).isActive = true
+			
+			spinnerView.translatesAutoresizingMaskIntoConstraints = false
+			spinnerView.leadingAnchor.constraint(equalTo: myImageView.trailingAnchor).isActive = true
+			spinnerView.topAnchor.constraint(equalTo: myImageView.topAnchor).isActive = true
+			spinnerView.bottomAnchor.constraint(equalTo: myImageView.bottomAnchor).isActive = true
+			spinnerView.trailingAnchor.constraint(equalTo: myImageView.trailingAnchor).isActive = true
+			
+			spinner.translatesAutoresizingMaskIntoConstraints = false
+			spinner.centerXAnchor.constraint(equalTo: myImageView.centerXAnchor).isActive = true
+			spinner.centerYAnchor.constraint(equalTo: myImageView.centerYAnchor).isActive = true
+		}
 }

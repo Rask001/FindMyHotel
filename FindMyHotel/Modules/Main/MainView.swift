@@ -5,16 +5,21 @@
 //  Created by Антон on 25.10.2022.
 //
 import UIKit
-fileprivate enum Constants {
-	static var popularity = "Popularity"
-	static var distance = "Distance from center"
-	static var avalibleRooms = "Number of available rooms"
-	static var titleBtnColor = UIColor.black
-	static var btnBGColor = UIColor.white
-}
+
 
 //MARK: - VIEW
 final class MainView: UIViewController {
+	
+	
+	//MARK: - Constants
+	private enum Constants {
+		static var popularity = "Popularity"
+		static var distance = "Distance from center"
+		static var avalibleRooms = "Number of available rooms"
+		static var sortNavButton = "⇅ Sort"
+		static var titleBtnColor = UIColor.black
+		static var btnBGColor = UIColor.white
+	}
 	
 	//MARK: - PROPERTY
 	private let tableView = UITableView()
@@ -24,7 +29,8 @@ final class MainView: UIViewController {
 	private var headerViewTopConstraint: NSLayoutConstraint?
 	private var viewModel: MainViewModelProtocol! {
 		didSet {
-			viewModel.fetchHotelsForMainView {
+			viewModel.fetchHotelsForMainView { [weak self] in
+				guard let self else { return }
 				self.tableView.reloadData()
 			}
 		}
@@ -44,14 +50,14 @@ final class MainView: UIViewController {
 	
 	//MARK: - SETUP
 	private func setupTableView() {
-		self.tableView.delegate = self
-		self.tableView.dataSource = self
-		self.tableView.backgroundColor = .systemGray5
-		self.tableView.separatorStyle = .none
-		self.tableView.allowsSelection = true
-		self.tableView.showsVerticalScrollIndicator = false
+		tableView.delegate = self
+		tableView.dataSource = self
+		tableView.backgroundColor = .systemGray5
+		tableView.separatorStyle = .none
+		tableView.allowsSelection = true
+		tableView.showsVerticalScrollIndicator = false
 		tableView.rowHeight = 300
-		self.tableView.register(HotelCell.self, forCellReuseIdentifier: HotelCell.identifire)
+		tableView.register(HotelCell.self, forCellReuseIdentifier: HotelCell.identifire)
 	}
 	
 	private func setupHeader() {
@@ -60,20 +66,20 @@ final class MainView: UIViewController {
 	}
 	
 	private func setupHeaderStackView() {
-		let buttonArray = self.createButtons(input: self.buttonSortName)
+		let buttonArray = createButtons(input: buttonSortName)
 		for item in buttonArray {
-			self.headerStackView.addArrangedSubview(item)
+			headerStackView.addArrangedSubview(item)
 		}
-		self.headerStackView.axis = .vertical
-		self.headerStackView.alignment = .center
-		self.headerStackView.spacing = 8
-		self.headerStackView.distribution = .equalSpacing
-		self.headerStackView.backgroundColor = .white
-		self.headerStackView.layer.cornerRadius = 10
-		self.headerStackView.layer.shadowColor = UIColor.black.cgColor
-		self.headerStackView.layer.shadowRadius = 4
-		self.headerStackView.layer.shadowOpacity = 0.2
-		self.headerStackView.layer.shadowOffset = CGSize(width: 0, height: 3 )
+		headerStackView.axis = .vertical
+		headerStackView.alignment = .center
+		headerStackView.spacing = 8
+		headerStackView.distribution = .equalSpacing
+		headerStackView.backgroundColor = .white
+		headerStackView.layer.cornerRadius = 10
+		headerStackView.layer.shadowColor = UIColor.black.cgColor
+		headerStackView.layer.shadowRadius = 4
+		headerStackView.layer.shadowOpacity = 0.2
+		headerStackView.layer.shadowOffset = CGSize(width: 0, height: 3 )
 	}
 	
 	private func createButtons(input: [String]) -> [UIButton] {
@@ -97,70 +103,77 @@ final class MainView: UIViewController {
 	
 	private func setupNavigation() {
 		let leftButtonItem = UIBarButtonItem(
-			title: "⇅ Sort",
+			title: Constants.sortNavButton,
 			style: .done,
 			target: self,
 			action: #selector(sortBtnAction)
 		)
-		self.navigationItem.leftBarButtonItem = leftButtonItem
-		self.navigationItem.leftBarButtonItem?.tintColor = .black
+		navigationItem.leftBarButtonItem = leftButtonItem
+		navigationItem.leftBarButtonItem?.tintColor = .black
 	}
 	
 	@objc func tapToSort(sender: UIButton) {
-		self.viewModel.animations.animateHeaderView(headerView: headerView, topConstraint: headerViewTopConstraint!, view: self)
-		self.viewModel.sorted(tag: sender.tag)
-		self.tableView.reloadData()
+		viewModel.animations.animateHeaderView(headerView: headerView, topConstraint: headerViewTopConstraint!, view: self)
+		viewModel.sorted(tag: sender.tag)
+		tableView.reloadData()
 	}
 	
 	@objc func sortBtnAction() {
-		self.viewModel.animations.animateHeaderView(headerView: headerView, topConstraint: headerViewTopConstraint!, view: self)
-	}
-	
-	//MARK: - LAYOUT
-	private func addSubview() {
-		self.view.backgroundColor = .systemGray5
-		self.view.addSubview(headerView)
-		self.headerView.addSubview(headerStackView)
-		self.view.addSubview(tableView)
-	}
-	
-	private func layout() {
-		self.tableView.translatesAutoresizingMaskIntoConstraints = false
-		self.tableView.topAnchor.constraint(equalTo: self.headerView.bottomAnchor).isActive = true
-		self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-		self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-		self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-		
-		self.headerViewTopConstraint = self.headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -160)
-		self.headerView.translatesAutoresizingMaskIntoConstraints = false
-		self.headerView.heightAnchor.constraint(equalToConstant: 160).isActive = true
-		self.headerViewTopConstraint!.isActive = true
-		self.headerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-		self.headerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-		
-		self.headerStackView.translatesAutoresizingMaskIntoConstraints = false
-		self.headerStackView.topAnchor.constraint(equalTo: self.headerView.topAnchor, constant: 7).isActive = true
-		self.headerStackView.bottomAnchor.constraint(equalTo: self.headerView.bottomAnchor, constant: -7).isActive = true
-		self.headerStackView.leadingAnchor.constraint(equalTo: self.headerView.leadingAnchor, constant: 7).isActive = true
-		self.headerStackView.trailingAnchor.constraint(equalTo: self.headerView.trailingAnchor, constant: -7).isActive = true
+		viewModel.animations.animateHeaderView(headerView: headerView, topConstraint: headerViewTopConstraint!, view: self)
 	}
 }
 
-//MARK: - EXTENSION UITableViewDataSource
+//MARK: - LAYOUT
+
+private extension MainView {
+	 func addSubview() {
+		view.backgroundColor = .systemGray5
+		view.addSubview(headerView)
+		headerView.addSubview(headerStackView)
+		view.addSubview(tableView)
+	}
+	
+	func layout() {
+		tableView.translatesAutoresizingMaskIntoConstraints = false
+		tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+		tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+		tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+		tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+		
+		headerViewTopConstraint = headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -160)
+		headerView.translatesAutoresizingMaskIntoConstraints = false
+		headerView.heightAnchor.constraint(equalToConstant: 160).isActive = true
+		headerViewTopConstraint!.isActive = true
+		headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+		headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+		
+		headerStackView.translatesAutoresizingMaskIntoConstraints = false
+		headerStackView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 7).isActive = true
+		headerStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -7).isActive = true
+		headerStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 7).isActive = true
+		headerStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -7).isActive = true
+	}
+}
+
+
+//MARK: - DataSource
 extension MainView: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath) as! HotelCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath) as? HotelCell else {
+			return UITableViewCell()
+		}
 		cell.viewModel = viewModel.cellViewModel(indexPath: indexPath)
 		return cell
 	}
 }
 
+
 //MARK: - EXTENSION UITableViewDelegate
 extension MainView: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		self.viewModel.hotels.count
+		viewModel.hotels.count
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
