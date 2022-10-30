@@ -7,13 +7,13 @@
 
 import Foundation
 import UIKit
-
 enum ServerError: Error {
 	case missingData
 	case errorImageDownload
 	case incorrectUrl
 	case decodingFail
 	case IncorrectData
+	case systemError(Error)
 }
 
 extension ServerError: LocalizedError {
@@ -29,6 +29,8 @@ extension ServerError: LocalizedError {
 			return NSLocalizedString("The problem with json decoding", comment: "")
 		case .IncorrectData:
 			return NSLocalizedString("The problem with Data extraction", comment: "")
+		case .systemError(let error):
+			return NSLocalizedString("\(error.localizedDescription)", comment: "")
 		}
 	}
 }

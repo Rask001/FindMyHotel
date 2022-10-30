@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 //MARK: - PROTOCOL
 protocol MainViewModelProtocol {
@@ -13,6 +14,8 @@ protocol MainViewModelProtocol {
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: NetworkServiceProtocol { get }
 	var animations: Animations { get }
+	var allert: AllertService { get }
+	func allert(notification: NSNotification) -> UIAlertController?
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
 	func sorted(tag: Int)

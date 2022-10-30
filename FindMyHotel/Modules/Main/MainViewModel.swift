@@ -11,8 +11,9 @@ import UIKit
 final class MainViewModel: MainViewModelProtocol {
 	
 	//MARK: - PROPERTY
-	let networkService: NetworkServiceProtocol = NetworkService()
+	var networkService: NetworkServiceProtocol = NetworkService()
 	let animations = Animations()
+	var allert = AllertService()
 	var hotels: [Hotel] = []
 	
 	//MARK: - ACTIONS
@@ -22,6 +23,14 @@ final class MainViewModel: MainViewModelProtocol {
 			self.hotels = result
 			completion()
 		}
+	}
+	
+	func allert(notification: NSNotification) -> UIAlertController? {
+		guard let userInfo = notification.userInfo else { return nil }
+		guard let error = userInfo["error"] else { return nil }
+		guard let textError: String = error as? String else { return nil }
+		let allert = allert.allert(title: "Error", text: textError)
+		return allert
 	}
 	
 	func sorted(tag: Int) {

@@ -46,6 +46,7 @@ final class MainView: UIViewController {
 	
 	//MARK: - LIVECYCLE
 	override func viewDidLoad() {
+		setupNotification()
 		super.viewDidLoad()
 		viewModel = MainViewModel()
 		setupHeader()
@@ -67,6 +68,10 @@ final class MainView: UIViewController {
 		tableView.showsVerticalScrollIndicator = false
 		tableView.rowHeight = Size.rowHeight
 		tableView.register(HotelCell.self, forCellReuseIdentifier: HotelCell.identifire)
+	}
+	
+	private func setupNotification() {
+		NotificationCenter.default.addObserver(self, selector: #selector(goToDetailSecond), name: Notification.Name("errorSend"), object: .none)
 	}
 	
 	private func setupHeader() {
@@ -115,6 +120,11 @@ final class MainView: UIViewController {
 		)
 		navigationItem.leftBarButtonItem = leftButtonItem
 		navigationItem.leftBarButtonItem?.tintColor = .black
+	}
+	
+	@objc func goToDetailSecond(notification: NSNotification) {
+		guard let allert = viewModel.allert(notification: notification) else { return }
+		present(allert, animated: true)
 	}
 	
 	@objc func tapToSort(sender: UIButton) {

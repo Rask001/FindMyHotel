@@ -9,37 +9,29 @@ import Foundation
 import UIKit
 //MARK: - PROTOCOL
 protocol NetworkServiceProtocol {
-	func loadFromJsonFromURL<T: Decodable>(_ url: URL, _ resultType: T.Type, _ completion: @escaping (_ result: T) throws -> Void)
+	func loadFromJsonFromURL<T: Decodable>(_ url: URL, _ resultType: T.Type, _ completion: @escaping (_ result: T) -> Void)
 }
-
 
 //MARK: - NETWORK SERVICE
 final class NetworkService: NetworkServiceProtocol {
 	
 	static var cache = NSCache<AnyObject, UIImage>()
 	
-	public func loadFromJsonFromURL<T: Decodable>(_ url: URL, _ resultType: T.Type, _ completion: @escaping (_ result: T) throws -> Void) {
-		
+	public func loadFromJsonFromURL<T: Decodable>(_ url: URL, _ resultType: T.Type, _ completion: @escaping (_ result: T) -> Void) {
 		let task = URLSession.shared.dataTask(with: url) { data, _, error in
 			if let error = error {
-				print("Error: \(error.localizedDescription)")
+				AllertService.error("\(ServerError.systemError(error))")
 			}
 			guard let data = data else {
-				print(ServerError.missingData); return
+				AllertService.error("\(ServerError.missingData)"); return
 			}
-			do {
-				let decoder = JSONDecoder()
-				decoder.keyDecodingStrategy = .convertFromSnakeCase
-				guard let result = try? decoder.decode(T.self, from: data) else {
-					throw ServerError.decodingFail
-				}
-				DispatchQueue.main.async {
-					try? completion(result)
-				}
+			let decoder = JSONDecoder()
+			decoder.keyDecodingStrategy = .convertFromSnakeCase
+			guard let result = try? decoder.decode(T.self, from: data) else {
+				AllertService.error("\(ServerError.decodingFail)"); return
 			}
-			catch {
-				print("Error: \(error.localizedDescription)")
-				print(ServerError.decodingFail)
+			DispatchQueue.main.async {
+				completion(result)
 			}
 		}
 		task.resume()

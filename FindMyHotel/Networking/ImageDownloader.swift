@@ -21,10 +21,9 @@ final class ImageDownloader {
 	
 	//MARK: - METHODS
 	func imageDownloadAndCahed<T: Decodable>(result: T, completion: @escaping (UIImage) -> Void) {
-		
 		guard let data = result as? Hotel else { return }
 		guard data.image != "", data.image != nil else { completion(Constants.imageDefault); return }
-		guard let imageId = data.image else {print(ServerError.IncorrectData); return }
+		guard let imageId = data.image else { AllertService.error("\(ServerError.IncorrectData)"); return }
 		
 		if let image = self.cache.object(forKey: "\(imageId)" as AnyObject) {
 			completion(image)
@@ -32,7 +31,7 @@ final class ImageDownloader {
 			let url: URL = .getImageUrl(withImageId: imageId)
 			let session = URLSession(configuration: .default)
 			let task = session.dataTask(with: url) { data, _, error in
-				guard let data = data, error == nil else { print(ServerError.missingData); return }
+				guard let data = data, error == nil else { AllertService.error("\(ServerError.missingData)"); return }
 				if let image = UIImage(data: data) {
 					self.cache.setObject(image, forKey: "\(imageId)" as AnyObject)
 					completion(image)

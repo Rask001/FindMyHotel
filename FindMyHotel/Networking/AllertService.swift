@@ -15,4 +15,10 @@ final class AllertService {
 		allert.addAction(action)
 		return allert
 	}
+	
+	static func error(_ text: String) {
+		let text = text
+		let buttonTag = ["error": text]
+		NotificationCenter.default.post(name: Notification.Name("errorSend"), object: nil, userInfo: buttonTag)
+	}
 }
