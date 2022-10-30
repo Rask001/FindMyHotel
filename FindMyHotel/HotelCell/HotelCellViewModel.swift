@@ -11,10 +11,11 @@ import UIKit
 final class HotelCellViewModel: HotelCellVMProtocol {
 	
 	//MARK: - PROPERTY
-	var networkService: GettingHotelProtocol = NetworkService()
-	let hotel: Hotel
+	var networkService: NetworkServiceProtocol = NetworkService()
+	var hotel: Hotel
+	
 	required init(hotel: Hotel) {
-		hotel = hotel
+		self.hotel = hotel
 	}
 	
 	var hotelAdress: String {
@@ -43,12 +44,11 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 	
 	//MARK: - ACTIONS
 	func fetchImage(completion: @escaping (UIImage) -> Void) {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { result in
 			ImageDownloader.shared.imageDownloadAndCahed(result: result) { image in
 				completion(image)
 			}
-			
 		}
 	}
-	
 }
+

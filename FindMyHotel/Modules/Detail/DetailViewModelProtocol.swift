@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - PROTOCOL
 protocol DetailViewModelProtocol {
 	
 	var hotel: Hotel { get }
@@ -16,7 +17,7 @@ protocol DetailViewModelProtocol {
 	var stars: String { get }
 	var lat: Double? { get }
 	var lon: Double? { get }
-	var networkService: GettingHotelProtocol { get }
+	var networkService: NetworkServiceProtocol { get }
 	func fetchImage(completion: @escaping(UIImage) -> Void)
 	func fetchHotelForDetailView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int

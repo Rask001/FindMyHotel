@@ -8,15 +8,15 @@
 import UIKit
 
 extension UIImage {
-		func crop( rect: CGRect) -> UIImage {
-				var rect = rect
-				rect.origin.x += self.scale
-				rect.origin.y += self.scale
-				rect.size.width *= self.size.width
-				rect.size.height *= self.size.height
-
-			let imageRef = self.cgImage!.cropping(to: rect)!
-				let image = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
-				return image
-		}
+	func crop( rect: CGRect) -> UIImage {
+		var rect = rect
+		rect.origin.x += self.scale
+		rect.origin.y += self.scale
+		rect.size.width *= self.size.width
+		rect.size.height *= self.size.height
+		
+		let imageCrop = self.cgImage!.cropping(to: rect)!
+		let image = UIImage(cgImage: imageCrop, scale: self.scale, orientation: self.imageOrientation)
+		return image
+	}
 }

@@ -10,31 +10,41 @@ import Foundation
 import UIKit
 
 //MARK: - VIEW
-class DetailView: UIViewController {
+final class DetailView: UIViewController {
 	
 	//MARK: - CONSTANTS
 	private enum Constants {
-		static var hotelNameFont: UIFont { UIFont(name: "Helvetica Neue Medium", size: 20)!}
-		static var distanceNameFont: UIFont { UIFont(name: "Helvetica Neue", size: 16)!}
-		static var starsSize: UIFont { UIFont(name: "Helvetica Neue", size: 28)!}
-		static var imageHotel =	UIImage(named: "Hotel")
-		static var mapImage =	UIImage(named: "Map")
-		static var mapLabelText = "Open map"
+		static let hotelNameFont: UIFont = UIFont(name: "Helvetica Neue Medium", size: 20)!
+		static let distanceNameFont: UIFont = UIFont(name: "Helvetica Neue", size: 16)!
+		static let starsSize: UIFont = UIFont(name: "Helvetica Neue", size: 28)!
+		static let imageHotel =	UIImage(named: "Hotel")
+		static let mapImage =	UIImage(named: "Map")
+		static let mapLabelText = "Open map"
+	}
+	
+	//MARK: - SizeConstants
+	private enum Size {
+		static let stackViewSpacing: CGFloat = 10
+		static let stackViewCornerRadius: CGFloat = 7
+		static let mapViewImageCornerRadius: CGFloat = 7
+		static let mapViewImageBorderWidth: CGFloat = 3
+		static let tapLabelCornerRadius: CGFloat = 5
 	}
 	
 	//MARK: - PROPERTY
 	private let imageView = UIImageView()
 	private let mapViewImage = UIImageView()
-	private var spinnerView = UIView()
+	private let spinnerView = UIView()
 	private var spinner = UIActivityIndicatorView()
 	private var stackView = UIStackView()
-	private var hotelName = UILabel()
+	private let hotelName = UILabel()
 	private let hotelAdress = UILabel()
 	private let stars = UILabel()
 	private let distance = UILabel()
 	private let suitsAvalibale = UILabel()
 	private let tapLabel = UILabel()
 	private var tapGesture: UITapGestureRecognizer!
+	private var arrayForStackView: [UILabel]!
 	var viewModel: DetailViewModelProtocol!
 	
 	
@@ -58,13 +68,13 @@ class DetailView: UIViewController {
 	
 	//MARK: - SETUP
 	private func setupStackView() {
-		let arrayForStackView = [hotelName, stars, suitsAvalibale, distance, hotelAdress]
+		arrayForStackView = [hotelName, stars, suitsAvalibale, distance, hotelAdress]
 		stackView = UIStackView(arrangedSubviews: arrayForStackView)
 		stackView.axis = .vertical
-		stackView.spacing = 10
+		stackView.spacing = Size.stackViewSpacing
 		stackView.alignment = .center
 		stackView.backgroundColor = .white
-		stackView.layer.cornerRadius = 7
+		stackView.layer.cornerRadius = Size.stackViewCornerRadius
 		stackView.distribution = .fillEqually
 	}
 	
@@ -110,19 +120,20 @@ class DetailView: UIViewController {
 		tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnMap(sender:)))
 		mapViewImage.addGestureRecognizer(tapGesture)
 		mapViewImage.backgroundColor = .white
-		mapViewImage.layer.cornerRadius = 7
+		mapViewImage.layer.cornerRadius = Size.mapViewImageCornerRadius
 		mapViewImage.contentMode = .scaleAspectFill
 		mapViewImage.clipsToBounds = true
-		mapViewImage.layer.borderWidth = 3
+		mapViewImage.layer.borderWidth = Size.mapViewImageBorderWidth
 		mapViewImage.layer.borderColor = UIColor.white.cgColor
 		mapViewImage.isUserInteractionEnabled = true
 		mapViewImage.image = Constants.mapImage
 	}
+	
 	private func setupTapLabel() {
 		tapLabel.textAlignment = .center
 		tapLabel.backgroundColor = .white
 		tapLabel.clipsToBounds = true
-		tapLabel.layer.cornerRadius = 5
+		tapLabel.layer.cornerRadius = Size.tapLabelCornerRadius
 		tapLabel.text = Constants.mapLabelText
 		tapLabel.font = Constants.distanceNameFont
 	}
@@ -149,7 +160,7 @@ class DetailView: UIViewController {
 			guard let self else { return }
 			let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.9, height: 0.9))
 			DispatchQueue.main.async {
-				UIView.animate(withDuration: 0.8) {
+				UIView.animate(withDuration: 0.5) {
 					self.imageView.alpha = 1
 					self.spinnerView.alpha = 0
 					self.imageView.image = croppedImg

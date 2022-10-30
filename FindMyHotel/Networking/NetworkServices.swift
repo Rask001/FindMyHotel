@@ -7,52 +7,43 @@
 
 import Foundation
 import UIKit
-
-protocol GettingHotelProtocol {
-	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ())
-	func fetchHotelsArray(url: URL, completion: @escaping (Result<[Hotel], Error>) -> Void)
+//MARK: - PROTOCOL
+protocol NetworkServiceProtocol {
+	func loadFromJsonFromURL<T: Decodable>(_ url: URL, _ resultType: T.Type, _ completion: @escaping (_ result: T) throws -> Void)
 }
 
-final class NetworkService: GettingHotelProtocol {
-	static let shared = NetworkService() //использую только для загрузки картинки из кэша в detailVC (тк локально созданный убиваеться)
+
+//MARK: - NETWORK SERVICE
+final class NetworkService: NetworkServiceProtocol {
 	
-	func fetchHotel(url: URL, completion: @escaping (Result<Hotel, Error>) -> ()) {
-		request(url: url) { (result: Result<Hotel, Error>) in
-			switch result {
-			case .success(let data):
-				completion(.success(data))
-			case .failure(let error):
-				completion(.failure(error))
+	static var cache = NSCache<AnyObject, UIImage>()
+	
+	public func loadFromJsonFromURL<T: Decodable>(_ url: URL, _ resultType: T.Type, _ completion: @escaping (_ result: T) throws -> Void) {
+		
+		let task = URLSession.shared.dataTask(with: url) { data, _, error in
+			if let error = error {
+				print("Error: \(error.localizedDescription)")
 			}
-		}
-	}
-	
-	func fetchHotelsArray(url: URL, completion: @escaping (Result<[Hotel], Error>) -> Void) {
-		request(url: url) { (result: Result<[Hotel], Error>) in
-			switch result {
-			case .success(let data):
-				completion(.success(data))
-			case .failure(let error):
-				completion(.failure(error))
+			guard let data = data else {
+				print(ServerError.missingData); return
 			}
-		}
-	}
-	
-	private func request<T: Decodable>(url: URL, completion: @escaping(Result<T, Error>) -> Void) {
-		URLSession.shared.dataTask(with: url) { data, _, error in
-			guard let data = data else { return }
 			do {
 				let decoder = JSONDecoder()
 				decoder.keyDecodingStrategy = .convertFromSnakeCase
-				let result = try decoder.decode(T.self, from: data)
-				DispatchQueue.main.async {
-					completion(.success(result))
+				guard let result = try? decoder.decode(T.self, from: data) else {
+					throw ServerError.decodingFail
 				}
-			} catch {
 				DispatchQueue.main.async {
-					completion(.failure(Errors.incorrectData))
+					try? completion(result)
 				}
 			}
-		}.resume()
+			catch {
+				print("Error: \(error.localizedDescription)")
+				print(ServerError.decodingFail)
+			}
+		}
+		task.resume()
 	}
 }
+
+

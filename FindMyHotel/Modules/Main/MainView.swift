@@ -7,25 +7,33 @@
 import UIKit
 
 
-//MARK: - VIEW
 final class MainView: UIViewController {
-	
 	
 	//MARK: - Constants
 	private enum Constants {
-		static var popularity = "Popularity"
-		static var distance = "Distance from center"
-		static var avalibleRooms = "Number of available rooms"
-		static var sortNavButton = "⇅ Sort"
-		static var titleBtnColor = UIColor.black
-		static var btnBGColor = UIColor.white
+		static let popularity = "Popularity"
+		static let distance = "Distance from center"
+		static let avalibleRooms = "Number of available rooms"
+		static let sortNavButton = "⇅ Sort"
+		static let titleBtnColor = UIColor.black
+		static let btnBGColor = UIColor.white
+	}
+	
+	//MARK: - SizeConstants
+	private enum Size {
+		static let rowHeight: CGFloat = 300
+		static let headerViewHeight: CGFloat = 130
+		static let headerStaackViewCornerRadius: CGFloat = 10
+		static let headerStaackViewShadowRadius: CGFloat = 4
+		static let headerStaackViewShadowOpacity: Float = 0.2
+		static let headerStaackViewShadowOffset: CGSize = CGSize(width: 0, height: 3 )
 	}
 	
 	//MARK: - PROPERTY
 	private let tableView = UITableView()
 	private let headerView = UIView()
 	private let headerStackView = UIStackView()
-	private var buttonSortName = [Constants.popularity, Constants.distance, Constants.avalibleRooms]
+	private let buttonSortName = [Constants.popularity, Constants.distance, Constants.avalibleRooms]
 	private var headerViewTopConstraint: NSLayoutConstraint?
 	private var viewModel: MainViewModelProtocol! {
 		didSet {
@@ -55,8 +63,9 @@ final class MainView: UIViewController {
 		tableView.backgroundColor = .systemGray5
 		tableView.separatorStyle = .none
 		tableView.allowsSelection = true
+		tableView.allowsMultipleSelection = false
 		tableView.showsVerticalScrollIndicator = false
-		tableView.rowHeight = 300
+		tableView.rowHeight = Size.rowHeight
 		tableView.register(HotelCell.self, forCellReuseIdentifier: HotelCell.identifire)
 	}
 	
@@ -72,26 +81,22 @@ final class MainView: UIViewController {
 		}
 		headerStackView.axis = .vertical
 		headerStackView.alignment = .center
-		headerStackView.spacing = 8
 		headerStackView.distribution = .equalSpacing
 		headerStackView.backgroundColor = .white
-		headerStackView.layer.cornerRadius = 10
+		headerStackView.layer.cornerRadius = Size.headerStaackViewCornerRadius
 		headerStackView.layer.shadowColor = UIColor.black.cgColor
-		headerStackView.layer.shadowRadius = 4
-		headerStackView.layer.shadowOpacity = 0.2
-		headerStackView.layer.shadowOffset = CGSize(width: 0, height: 3 )
+		headerStackView.layer.shadowRadius = Size.headerStaackViewShadowRadius
+		headerStackView.layer.shadowOpacity = Size.headerStaackViewShadowOpacity
+		headerStackView.layer.shadowOffset = Size.headerStaackViewShadowOffset
 	}
 	
 	private func createButtons(input: [String]) -> [UIButton] {
 		var buttonArray = [UIButton]()
 		var buttonTag = 0
 		for item in input {
-			let button = UIButton()
+			let button = UIButton(type: .system)
 			button.setTitle(item, for: .normal)
 			button.setTitleColor(Constants.titleBtnColor, for: .normal)
-			button.translatesAutoresizingMaskIntoConstraints = false
-			button.heightAnchor.constraint(equalToConstant: 44).isActive = true
-			button.widthAnchor.constraint(equalToConstant: 220).isActive = true
 			button.backgroundColor = Constants.btnBGColor
 			button.tag = buttonTag
 			buttonTag += 1
@@ -126,7 +131,7 @@ final class MainView: UIViewController {
 //MARK: - LAYOUT
 
 private extension MainView {
-	 func addSubview() {
+	func addSubview() {
 		view.backgroundColor = .systemGray5
 		view.addSubview(headerView)
 		headerView.addSubview(headerStackView)
@@ -140,9 +145,9 @@ private extension MainView {
 		tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
 		tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		
-		headerViewTopConstraint = headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -160)
+		headerViewTopConstraint = headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -Size.headerViewHeight)
 		headerView.translatesAutoresizingMaskIntoConstraints = false
-		headerView.heightAnchor.constraint(equalToConstant: 160).isActive = true
+		headerView.heightAnchor.constraint(equalToConstant: Size.headerViewHeight).isActive = true
 		headerViewTopConstraint!.isActive = true
 		headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
 		headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -169,7 +174,7 @@ extension MainView: UITableViewDataSource {
 }
 
 
-//MARK: - EXTENSION UITableViewDelegate
+//MARK: - Delegate
 extension MainView: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

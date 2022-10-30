@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MapViewModel: MapViewModelProtocol {
+final class MapViewModel: MapViewModelProtocol {
 	
 	//MARK: - PROPERTY
 	var lat: Double

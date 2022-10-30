@@ -11,7 +11,7 @@ import UIKit
 final class DetailViewModel: DetailViewModelProtocol {
 
 	//MARK: - PROPERTY
-	var networkService: GettingHotelProtocol = NetworkService()
+	let networkService: NetworkServiceProtocol = NetworkService()
 	var hotel: Hotel
 	var lat: Double?
 	var lon: Double?
@@ -22,15 +22,10 @@ final class DetailViewModel: DetailViewModelProtocol {
 	}
 	
 	private func setLonLat() {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
+		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { [weak self] result in
 			guard let self else { return }
-			switch result {
-			case .success(let data):
-				self.lon = data.lon ?? 0.0
-				self.lat = data.lat ?? 0.0
-			case .failure(_):
-				print(Errors.incorrectUrl)
-			}
+			self.lon = result.lon ?? 0.0
+			self.lat = result.lat ?? 0.0
 		}
 	}
 	
@@ -53,7 +48,7 @@ final class DetailViewModel: DetailViewModelProtocol {
 	//MARK: - ACTIONS
 	
 	func fetchImage(completion: @escaping (UIImage) -> Void) {
-		NetworkService.shared.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { result in
+		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { result in
 			ImageDownloader.shared.imageDownloadAndCahed(result: result) { image in
 				completion(image)
 			}
@@ -61,17 +56,9 @@ final class DetailViewModel: DetailViewModelProtocol {
 	}
 
 	func fetchHotelForDetailView(completion: @escaping () -> Void) {
-		networkService.fetchHotel(url: .getHotelUrl(withID: hotel.id)) { [weak self] result in
+		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { [weak self] result in
 			guard let self else { return }
-			switch result {
-			case .success(let data):
-				self.hotel = data
-				completion()
-			case .failure(let error):
-				print(error.localizedDescription)
-				print(Errors.incorrectData)
-				completion()
-			}
+			self.hotel = result
 		}
 	}
 	

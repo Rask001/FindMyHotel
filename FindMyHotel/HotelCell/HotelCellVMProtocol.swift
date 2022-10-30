@@ -15,7 +15,7 @@ protocol HotelCellVMProtocol {
 	var distance: String { get }
 	var suitsAvalibaleCount: String { get }
 	var stars: String { get }
-	var networkService: GettingHotelProtocol { get }
+	var networkService: NetworkServiceProtocol { get }
 	func fetchImage(completion: @escaping(UIImage) -> Void)
 	
 }

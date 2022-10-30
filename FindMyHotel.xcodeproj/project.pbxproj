@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A2F8F15290DDE3B00D20733 /* AllertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F8F14290DDE3B00D20733 /* AllertService.swift */; };
 		3A84F4D229096B6F00CEAE50 /* ImageCropperExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D129096B6F00CEAE50 /* ImageCropperExt.swift */; };
 		3A84F4D42909AD6B00CEAE50 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D32909AD6B00CEAE50 /* ModuleBuilder.swift */; };
 		3A84F4D62909AE0800CEAE50 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4D52909AE0800CEAE50 /* DetailView.swift */; };
@@ -18,7 +19,7 @@
 		3A84F4E4290AB58C00CEAE50 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4E3290AB58C00CEAE50 /* MapView.swift */; };
 		3A84F4E7290AB77200CEAE50 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4E6290AB77200CEAE50 /* MapViewModel.swift */; };
 		3A84F4E9290AB78D00CEAE50 /* MapViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4E8290AB78D00CEAE50 /* MapViewModelProtocol.swift */; };
-		3A84F4EB290B32C600CEAE50 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4EA290B32C600CEAE50 /* Error.swift */; };
+		3A84F4EB290B32C600CEAE50 /* ServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4EA290B32C600CEAE50 /* ServerError.swift */; };
 		3A84F4ED290BD76500CEAE50 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F4EC290BD76500CEAE50 /* ImageDownloader.swift */; };
 		3AFE7F532907EBC000B292A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F522907EBC000B292A7 /* AppDelegate.swift */; };
 		3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE7F542907EBC000B292A7 /* SceneDelegate.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A2F8F14290DDE3B00D20733 /* AllertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllertService.swift; sourceTree = "<group>"; };
 		3A84F4D129096B6F00CEAE50 /* ImageCropperExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropperExt.swift; sourceTree = "<group>"; };
 		3A84F4D32909AD6B00CEAE50 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		3A84F4D52909AE0800CEAE50 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -46,7 +48,7 @@
 		3A84F4E3290AB58C00CEAE50 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		3A84F4E6290AB77200CEAE50 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		3A84F4E8290AB78D00CEAE50 /* MapViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModelProtocol.swift; sourceTree = "<group>"; };
-		3A84F4EA290B32C600CEAE50 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		3A84F4EA290B32C600CEAE50 /* ServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerError.swift; sourceTree = "<group>"; };
 		3A84F4EC290BD76500CEAE50 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		3AFE7F4F2907EBC000B292A7 /* FindMyHotel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMyHotel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFE7F522907EBC000B292A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -180,7 +182,8 @@
 				3AFE7F702908397B00B292A7 /* NetworkServices.swift */,
 				3A84F4EC290BD76500CEAE50 /* ImageDownloader.swift */,
 				3AFE7F7829093EE400B292A7 /* UrlServiceExt.swift */,
-				3A84F4EA290B32C600CEAE50 /* Error.swift */,
+				3A84F4EA290B32C600CEAE50 /* ServerError.swift */,
+				3A2F8F14290DDE3B00D20733 /* AllertService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -277,11 +280,12 @@
 				3AFE7F7929093EE400B292A7 /* UrlServiceExt.swift in Sources */,
 				3AFE7F672907F09E00B292A7 /* HotelCell.swift in Sources */,
 				3A84F4D62909AE0800CEAE50 /* DetailView.swift in Sources */,
+				3A2F8F15290DDE3B00D20733 /* AllertService.swift in Sources */,
 				3AFE7F552907EBC000B292A7 /* SceneDelegate.swift in Sources */,
 				3A84F4E7290AB77200CEAE50 /* MapViewModel.swift in Sources */,
 				3A84F4DC2909B70E00CEAE50 /* HotelCellVMProtocol.swift in Sources */,
 				3A84F4D82909AE3000CEAE50 /* DetailViewModel.swift in Sources */,
-				3A84F4EB290B32C600CEAE50 /* Error.swift in Sources */,
+				3A84F4EB290B32C600CEAE50 /* ServerError.swift in Sources */,
 				3A84F4E9290AB78D00CEAE50 /* MapViewModelProtocol.swift in Sources */,
 				3A84F4D229096B6F00CEAE50 /* ImageCropperExt.swift in Sources */,
 				3A84F4E2290A957B00CEAE50 /* Animations.swift in Sources */,

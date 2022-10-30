@@ -8,24 +8,19 @@
 import Foundation
 import UIKit
 
-class MainViewModel: MainViewModelProtocol {
+final class MainViewModel: MainViewModelProtocol {
 	
 	//MARK: - PROPERTY
-	var networkService: GettingHotelProtocol = NetworkService()
-	var animations = Animations()
+	let networkService: NetworkServiceProtocol = NetworkService()
+	let animations = Animations()
 	var hotels: [Hotel] = []
 	
 	//MARK: - ACTIONS
 	func fetchHotelsForMainView(completion: @escaping () -> Void) {
-		networkService.fetchHotelsArray(url: .getHotelsListUrl) { result in
-			switch result {
-			case .success(let data):
-				self.hotels = data
-				completion() // TODO: reload on main
-			case .failure(let error):
-				print(error.localizedDescription)
-				completion()
-			}
+		networkService.loadFromJsonFromURL(.getHotelsListUrl, [Hotel].self) { [weak self] result in
+			guard let self else { return }
+			self.hotels = result
+			completion()
 		}
 	}
 	
@@ -37,8 +32,6 @@ class MainViewModel: MainViewModelProtocol {
 		default: print("check buttonSortName in MainView")
 		}
 	}
-	
-	
 	
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
 		let hotel = hotels[indexPath.row]

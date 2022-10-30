@@ -7,10 +7,11 @@
 
 import Foundation
 
+//MARK: - PROTOCOL
 protocol MainViewModelProtocol {
 	var hotels: [Hotel] { get }
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
-	var networkService: GettingHotelProtocol { get }
+	var networkService: NetworkServiceProtocol { get }
 	var animations: Animations { get }
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
