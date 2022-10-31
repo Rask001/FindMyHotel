@@ -14,7 +14,7 @@ protocol MainViewModelProtocol {
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: NetworkServiceProtocol { get }
 	var animations: Animations { get }
-	var allert: AllertService { get }
+	var allertService: AllertService { get }
 	func allert(notification: NSNotification) -> UIAlertController?
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int

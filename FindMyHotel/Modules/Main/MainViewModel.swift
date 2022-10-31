@@ -13,15 +13,20 @@ final class MainViewModel: MainViewModelProtocol {
 	//MARK: - PROPERTY
 	var networkService: NetworkServiceProtocol = NetworkService()
 	let animations = Animations()
-	var allert = AllertService()
+	var allertService = AllertService()
 	var hotels: [Hotel] = []
 	
 	//MARK: - ACTIONS
 	func fetchHotelsForMainView(completion: @escaping () -> Void) {
-		networkService.loadFromJsonFromURL(.getHotelsListUrl, [Hotel].self) { [weak self] result in
-			guard let self else { return }
-			self.hotels = result
-			completion()
+		networkService.fetchDataFromURL(.getHotelsListUrl) { [weak self] (result : Result<[Hotel],Error>) in
+			guard let self = self else { return }
+			switch result {
+			case .success(let model):
+					self.hotels = model
+					completion()
+			case .failure(let error):
+				AllertService.systemError(error);
+			}
 		}
 	}
 	
@@ -29,7 +34,7 @@ final class MainViewModel: MainViewModelProtocol {
 		guard let userInfo = notification.userInfo else { return nil }
 		guard let error = userInfo["error"] else { return nil }
 		guard let textError: String = error as? String else { return nil }
-		let allert = allert.allert(title: "Error", text: textError)
+		let allert = allertService.allert(title: "Error", text: textError)
 		return allert
 	}
 	

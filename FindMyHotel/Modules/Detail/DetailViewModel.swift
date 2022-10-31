@@ -12,20 +12,28 @@ final class DetailViewModel: DetailViewModelProtocol {
 
 	//MARK: - PROPERTY
 	let networkService: NetworkServiceProtocol = NetworkService()
+	let imageDownloader: ImageDownloaderProtocol = ImageDownloader()
 	var hotel: Hotel
 	var lat: Double?
 	var lon: Double?
+	var image: String?
 	
 	required init(hotel: Hotel) {
 		self.hotel = hotel
-		setLonLat()
+		set()
 	}
 	
-	private func setLonLat() {
-		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { [weak self] result in
-			guard let self else { return }
-			self.lon = result.lon ?? 0.0
-			self.lat = result.lat ?? 0.0
+	private func set() {
+		networkService.fetchDataFromURL(.getHotelUrl(withID: hotel.id)) { [weak self] (result : Result<Hotel,Error>) in
+			guard let self = self else { return }
+			switch result {
+			case .success(let model):
+				self.lon = model.lon ?? 0.0
+				self.lat = model.lat ?? 0.0
+				self.image = model.image ?? ""
+			case .failure(let error):
+				AllertService.systemError(error);
+			}
 		}
 	}
 	
@@ -47,18 +55,36 @@ final class DetailViewModel: DetailViewModelProtocol {
 	
 	//MARK: - ACTIONS
 	
-	func fetchImage(completion: @escaping (UIImage) -> Void) {
-		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { result in
-			ImageDownloader.shared.imageDownloadAndCahed(result: result) { image in
-				completion(image)
+	func downloadImage(completion: @escaping (UIImage) -> Void) {
+		guard let imageStrong = image else { completion(ImageDownloader.imageDefault); return }
+		guard imageStrong != "" else { completion(ImageDownloader.imageDefault); return }
+		let urlKey = URL.getHotelUrl(withID: hotel.id).absoluteString
+		if let image = ImageCache.shared.object(forKey: urlKey as NSString) {
+			completion(image)
+		} else {
+			imageDownloader.imageDownloader(url: .getImageUrl(withImageId: imageStrong)) { result in
+				switch result {
+				case .success(let image):
+					ImageCache.shared.setObject(image, forKey: urlKey as NSString)
+					completion(image)
+				case .failure(_):
+					AllertService.errorImageDownload()
+					completion(ImageDownloader.imageDefault)
+				}
 			}
 		}
 	}
 
 	func fetchHotelForDetailView(completion: @escaping () -> Void) {
-		networkService.loadFromJsonFromURL(.getHotelUrl(withID: hotel.id), Hotel.self) { [weak self] result in
-			guard let self else { return }
-			self.hotel = result
+		networkService.fetchDataFromURL(.getHotelUrl(withID: hotel.id)) { [weak self] (result : Result<Hotel,Error>) in
+			guard let self = self else { return }
+			switch result {
+			case .success(let model):
+				self.hotel = model
+				completion()
+			case .failure(let error):
+				AllertService.systemError(error);
+			}
 		}
 	}
 	

@@ -156,8 +156,8 @@ final class DetailView: UIViewController {
 	}
 	
 	private func setImage() {
-		viewModel.fetchImage { [weak self] image in
-			guard let self else { return }
+		viewModel.downloadImage { [weak self] image in
+			guard let self = self else { return }
 			let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.9, height: 0.9))
 			DispatchQueue.main.async {
 				UIView.animate(withDuration: 0.5) {
@@ -189,7 +189,7 @@ private extension DetailView {
 		imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
 		imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-		imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+		imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
 		
 		mapViewImage.translatesAutoresizingMaskIntoConstraints = false
 		mapViewImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true

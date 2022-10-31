@@ -38,8 +38,10 @@ final class MainView: UIViewController {
 	private var viewModel: MainViewModelProtocol! {
 		didSet {
 			viewModel.fetchHotelsForMainView { [weak self] in
-				guard let self else { return }
+				guard let self = self else { return }
+				DispatchQueue.main.async {
 				self.tableView.reloadData()
+			  }
 			}
 		}
 	}
@@ -71,7 +73,7 @@ final class MainView: UIViewController {
 	}
 	
 	private func setupNotification() {
-		NotificationCenter.default.addObserver(self, selector: #selector(goToDetailSecond), name: Notification.Name("errorSend"), object: .none)
+		NotificationCenter.default.addObserver(self, selector: #selector(allertUI), name: Notification.Name("errorSend"), object: .none)
 	}
 	
 	private func setupHeader() {
@@ -122,7 +124,7 @@ final class MainView: UIViewController {
 		navigationItem.leftBarButtonItem?.tintColor = .black
 	}
 	
-	@objc func goToDetailSecond(notification: NSNotification) {
+	@objc func allertUI(notification: NSNotification) {
 		guard let allert = viewModel.allert(notification: notification) else { return }
 		present(allert, animated: true)
 	}
@@ -169,7 +171,6 @@ private extension MainView {
 		headerStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -7).isActive = true
 	}
 }
-
 
 //MARK: - DataSource
 extension MainView: UITableViewDataSource {

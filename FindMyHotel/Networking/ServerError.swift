@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 enum ServerError: Error {
+	case error404
 	case missingData
 	case errorImageDownload
 	case incorrectUrl
@@ -31,6 +32,8 @@ extension ServerError: LocalizedError {
 			return NSLocalizedString("The problem with Data extraction", comment: "")
 		case .systemError(let error):
 			return NSLocalizedString("\(error.localizedDescription)", comment: "")
+		case .error404:
+			return NSLocalizedString("The problem with Data extraction", comment: "")
 		}
 	}
 }

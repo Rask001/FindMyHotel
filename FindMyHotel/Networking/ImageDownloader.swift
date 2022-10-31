@@ -8,39 +8,29 @@
 import Foundation
 import UIKit
 
-final class ImageDownloader {
-	
-	//MARK: - CONSTANTS
-	private enum Constants {
-		static let imageDefault = UIImage(named: "Hotel")!
-	}
+protocol ImageDownloaderProtocol {
+	func imageDownloader(url: URL, completion: @escaping (Result<UIImage,Error>) -> Void)
+}
+
+final class ImageDownloader: ImageDownloaderProtocol {
 	
 	//MARK: - PROPERTY
 	static let shared = ImageDownloader()
-	lazy var cache = NetworkService.cache
-	
+	static let imageDefault = UIImage(named: "Hotel")!
 	//MARK: - METHODS
-	func imageDownloadAndCahed<T: Decodable>(result: T, completion: @escaping (UIImage) -> Void) {
-		guard let data = result as? Hotel else { return }
-		guard data.image != "", data.image != nil else { completion(Constants.imageDefault); return }
-		guard let imageId = data.image else { AllertService.error("\(ServerError.IncorrectData)"); return }
-		
-		if let image = self.cache.object(forKey: "\(imageId)" as AnyObject) {
-			completion(image)
-		} else {
-			let url: URL = .getImageUrl(withImageId: imageId)
-			let session = URLSession(configuration: .default)
-			let task = session.dataTask(with: url) { data, _, error in
-				guard let data = data, error == nil else { AllertService.error("\(ServerError.missingData)"); return }
-				if let image = UIImage(data: data) {
-					self.cache.setObject(image, forKey: "\(imageId)" as AnyObject)
-					completion(image)
-				} else {
-					self.cache.setObject(Constants.imageDefault, forKey: "\(imageId)" as AnyObject)
-					completion(Constants.imageDefault)
-				}
+	
+	func imageDownloader(url: URL, completion: @escaping (Result<UIImage,Error>) -> Void) {
+		let session = URLSession(configuration: .default)
+		session.dataTask(with: url) { data, response, error in
+			if let error = error { completion(.failure(error)) }
+			guard let httpResponse = response as? HTTPURLResponse else { return }
+			guard let data = data else { return }
+			if let image = UIImage(data: data) {
+					completion(.success(image))
+			} else {
+				completion(.failure(ServerError.error404))
+				print(httpResponse.statusCode)
 			}
-			task.resume()
-		}
+		}.resume()
 	}
 }

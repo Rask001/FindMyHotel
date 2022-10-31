@@ -50,7 +50,7 @@ final class HotelCell: UITableViewCell {
 			stars.text = viewModel.stars
 			hotelAdress.text = viewModel.hotelAdress
 			viewModel.fetchImage { [weak self] image in
-				guard let self else { return }
+				guard let self = self else { return }
 				let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.99, height: 0.9))
 				DispatchQueue.main.async {
 					UIView.animate(withDuration: 0.5) {
@@ -148,6 +148,11 @@ final class HotelCell: UITableViewCell {
 		layer.shadowRadius = Size.backgroundViewShadowRadius
 		layer.shadowOpacity = Size.backgroundViewShadowOpacity
 		layer.shadowOffset = Size.backgroundViewShadowOffset
+	}
+	
+	override func prepareForReuse() {
+			super.prepareForReuse()
+		  myImageView.image = nil
 	}
 }
 
