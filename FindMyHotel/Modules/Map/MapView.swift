@@ -13,7 +13,7 @@ final class MapView: UIViewController {
 	
 	//MARK: - CONSTANTS
 	private enum Constants {
-		static let pinImage =	UIImage(named: "Pin")
+		static let pinImage =	UIImage(named: "pin")
 		static let hotelPinText = "Your hotel"
 		static let annotationViewIdentifier = "custom"
 		static let annotationViewSize = CGSize(width: 40, height: 40)
@@ -84,4 +84,3 @@ extension MapView: MKMapViewDelegate {
 		return annotationView
 	}
 }
-
