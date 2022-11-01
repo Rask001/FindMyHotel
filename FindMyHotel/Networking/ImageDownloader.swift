@@ -26,7 +26,7 @@ final class ImageDownloader: ImageDownloaderProtocol {
 			guard let httpResponse = response as? HTTPURLResponse else { return }
 			guard let data = data else { return }
 			if let image = UIImage(data: data) {
-					completion(.success(image))
+				completion(.success(image))
 			} else {
 				completion(.failure(ServerError.error404))
 				print(httpResponse.statusCode)

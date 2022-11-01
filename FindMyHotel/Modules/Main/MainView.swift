@@ -40,8 +40,8 @@ final class MainView: UIViewController {
 			viewModel.fetchHotelsForMainView { [weak self] in
 				guard let self = self else { return }
 				DispatchQueue.main.async {
-				self.tableView.reloadData()
-			  }
+					self.tableView.reloadData()
+				}
 			}
 		}
 	}

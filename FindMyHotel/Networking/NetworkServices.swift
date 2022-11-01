@@ -20,7 +20,7 @@ final class NetworkService: NetworkServiceProtocol {
 			guard let data = data else { return }
 			let decoder = JSONDecoder()
 			decoder.keyDecodingStrategy = .convertFromSnakeCase
-				completion(Result{ try decoder.decode(T.self, from: data) })
+			completion(Result{ try decoder.decode(T.self, from: data) })
 		}.resume()
 	}
 }

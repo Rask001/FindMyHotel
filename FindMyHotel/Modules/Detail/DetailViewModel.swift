@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class DetailViewModel: DetailViewModelProtocol {
-
+	
 	//MARK: - PROPERTY
 	let networkService: NetworkServiceProtocol = NetworkService()
 	let imageDownloader: ImageDownloaderProtocol = ImageDownloader()
@@ -74,7 +74,7 @@ final class DetailViewModel: DetailViewModelProtocol {
 			}
 		}
 	}
-
+	
 	func fetchHotelForDetailView(completion: @escaping () -> Void) {
 		networkService.fetchDataFromURL(.getHotelUrl(withID: hotel.id)) { [weak self] (result : Result<Hotel,Error>) in
 			guard let self = self else { return }
