@@ -9,27 +9,28 @@ import Foundation
 import UIKit
 
 //MARK: - PROTOCOL
-protocol BuilderProtocol {
-	static func createMainView() -> UIViewController
-	static func createDetailView(hotel: Hotel) -> UIViewController
+protocol ModuleBuilderProtocol {
+	func createMainView() -> UIViewController
+	func createDetailView(hotel: Hotel) -> UIViewController
+	func createMapView(lat: Double, lon: Double) -> UIViewController
 }
 
 //MARK: - CLASS
-struct ModuleBuilder: BuilderProtocol {
+final class ModuleBuilder: ModuleBuilderProtocol {
 	
-	static func createMainView() -> UIViewController {
+	func createMainView() -> UIViewController {
 		let view = MainView()
 		return view
 	}
 	
-	static func createDetailView(hotel: Hotel) -> UIViewController {
+	func createDetailView(hotel: Hotel) -> UIViewController {
 		let view = DetailView()
 		let viewModel = DetailViewModel(hotel: hotel)
 		view.viewModel = viewModel
 		return view
 	}
 	
-	static func createMapView(lat: Double, lon: Double) -> UIViewController {
+	func createMapView(lat: Double, lon: Double) -> UIViewController {
 		let view = MapView()
 		let viewModel = MapViewModel(lat: lat, lon: lon)
 		view.viewModel = viewModel

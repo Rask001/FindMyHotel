@@ -13,11 +13,12 @@ protocol MainViewModelProtocol {
 	var hotels: [Hotel] { get }
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: NetworkServiceProtocol { get }
-	var animations: Animations { get }
+	var animations: AnimationsProtocol { get }
 	var allertService: AllertService { get }
 	func allert(notification: NSNotification) -> UIAlertController?
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
 	func sorted(tag: Int)
 	func checkConnectStatus()
+	func createDetailView(index: Int) -> UIViewController
 }

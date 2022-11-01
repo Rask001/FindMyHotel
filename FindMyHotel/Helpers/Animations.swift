@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-final class Animations {
+protocol AnimationsProtocol {
+	func animateHeaderView(headerView: UIView, topConstraint: NSLayoutConstraint, view: UIViewController)
+}
+
+final class Animations: AnimationsProtocol {
 	private var headerIsClosed = true
 	
 	func animateHeaderView(headerView: UIView, topConstraint: NSLayoutConstraint, view: UIViewController) {

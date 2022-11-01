@@ -12,8 +12,9 @@ final class MainViewModel: MainViewModelProtocol {
 	
 	//MARK: - PROPERTY
 	var networkService: NetworkServiceProtocol = NetworkService()
-	let animations = Animations()
+	let animations: AnimationsProtocol = Animations()
 	var allertService = AllertService()
+	let builder: ModuleBuilderProtocol = ModuleBuilder()
 	var hotels: [Hotel] = []
 	
 	//MARK: - ACTIONS
@@ -57,6 +58,11 @@ final class MainViewModel: MainViewModelProtocol {
 				AllertService.internetConnectionIsFaild()
 			}
 		}
+	}
+	
+	func createDetailView(index: Int) -> UIViewController {
+		let vc = builder.createDetailView(hotel: hotels[index])
+		return vc
 	}
 	
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {

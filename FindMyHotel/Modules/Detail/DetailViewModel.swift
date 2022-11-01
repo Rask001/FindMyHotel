@@ -13,6 +13,7 @@ final class DetailViewModel: DetailViewModelProtocol {
 	//MARK: - PROPERTY
 	let networkService: NetworkServiceProtocol = NetworkService()
 	let imageDownloader: ImageDownloaderProtocol = ImageDownloader()
+	let modulBuilder: ModuleBuilderProtocol = ModuleBuilder()
 	var hotel: Hotel
 	var lat: Double?
 	var lon: Double?
@@ -41,6 +42,10 @@ final class DetailViewModel: DetailViewModelProtocol {
 		hotel.address
 	}
 	
+	var hotelId: Int {
+		hotel.id
+	}
+	
 	var distance: String {
 		"📍\(hotel.distance)km from center"
 	}
@@ -54,6 +59,13 @@ final class DetailViewModel: DetailViewModelProtocol {
 	}
 	
 	//MARK: - ACTIONS
+	
+	func createMapView() -> UIViewController {
+		guard let lat = self.lat else { return DetailView() }
+		guard let lon = self.lon else { return DetailView() }
+		let mapView = modulBuilder.createMapView(lat: lat, lon: lon)
+		return mapView
+	}
 	
 	func downloadImage(completion: @escaping (UIImage) -> Void) {
 		guard let imageStrong = image else { completion(ImageDownloader.defImage); return }

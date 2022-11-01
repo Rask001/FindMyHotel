@@ -139,10 +139,7 @@ final class DetailView: UIViewController {
 	}
 	
 	@objc func tapOnMap(sender: UITapGestureRecognizer) {
-		print(#function)
-		guard let lat = viewModel.lat else { return }
-		guard let lon = viewModel.lon else { return }
-		let mapView = ModuleBuilder.createMapView(lat: lat, lon: lon)
+		let mapView = viewModel.createMapView()
 		navigationController?.show(mapView, sender: self)
 	}
 	

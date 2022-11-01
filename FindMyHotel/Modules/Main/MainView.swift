@@ -201,9 +201,7 @@ extension MainView: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		print(#function, indexPath.row)
-		let hotel = viewModel.hotels[indexPath.row]
-		let detailView = ModuleBuilder.createDetailView(hotel: hotel)
+		let detailView = viewModel.createDetailView(index: indexPath.row)
 		navigationController?.show(detailView, sender: self)
 	}
 }
