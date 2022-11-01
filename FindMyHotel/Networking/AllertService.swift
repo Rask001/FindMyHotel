@@ -17,27 +17,39 @@ final class AllertService {
 	}
 	
 	static func systemError(_ error: Error) {
-		AllertService.error("\(ServerError.systemError(error).localizedDescription)")
+		DispatchQueue.main.async {
+			AllertService.error("\(ServerError.systemError(error).localizedDescription)")
+		}
 	}
 	
 	static func errorImageDownload() {
-		error("\(ServerError.errorImageDownload.localizedDescription)")
+		DispatchQueue.main.async {
+			error("\(ServerError.errorImageDownload.localizedDescription)")
+		}
 	}
 	
 	static func missingData() {
-		error("\(ServerError.missingData.localizedDescription)")
+		DispatchQueue.main.async {
+			error("\(ServerError.missingData.localizedDescription)")
+		}
 	}
 	
 	static func incorrectData() {
-		error("\(ServerError.IncorrectData.localizedDescription)")
+		DispatchQueue.main.async {
+			error("\(ServerError.IncorrectData.localizedDescription)")
+		}
 	}
 	
 	static func decodingFail() {
-		error("\(ServerError.decodingFail.localizedDescription)")
+		DispatchQueue.main.async {
+			error("\(ServerError.decodingFail.localizedDescription)")
+		}
 	}
 	
 	static func incorrectUrl() {
-		error("\(ServerError.incorrectUrl.localizedDescription)")
+		DispatchQueue.main.async {
+			error("\(ServerError.incorrectUrl.localizedDescription)")
+		}
 	}
 	
 	static func error(_ text: String) {
