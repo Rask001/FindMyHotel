@@ -15,7 +15,7 @@ protocol BuilderProtocol {
 }
 
 //MARK: - CLASS
-final class ModuleBuilder: BuilderProtocol {
+struct ModuleBuilder: BuilderProtocol {
 	
 	static func createMainView() -> UIViewController {
 		let view = MainView()

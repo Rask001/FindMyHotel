@@ -49,8 +49,7 @@ final class MainViewModel: MainViewModelProtocol {
 	
 	func checkConnectStatus() {
 		DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-		let isConnection = NetworkMonitor.shared.isConnected
-			print("connect: \(isConnection)")
+			let isConnection = NetworkMonitor.shared.isConnected
 			switch isConnection {
 			case true:
 				AllertService.theConnectionIsEstablished()

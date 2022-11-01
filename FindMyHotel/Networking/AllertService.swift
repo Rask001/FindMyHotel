@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class AllertService {
+struct AllertService {
 	func allert(title: String, text: String) -> UIAlertController {
 		let allert = UIAlertController(title: title, message: text, preferredStyle: .alert)
 		let action = UIAlertAction(title: "ok", style: .default)

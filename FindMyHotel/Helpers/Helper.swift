@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class Helper {
+struct Helper {
 	
-	class func starsToString(stars: Double) -> String {
+	static func starsToString(stars: Double) -> String {
 		switch stars {
 		case 0:   return "☆ ☆ ☆ ☆ ☆"
 		case 1.0: return "★ ☆ ☆ ☆ ☆"
