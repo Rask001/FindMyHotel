@@ -10,7 +10,6 @@ import UIKit
 protocol HotelCellVMProtocol {
 	
 	var hotel: Hotel { get }
-	var hotelWithStr: Hotel! { get }
 	var hotelName: String { get }
 	var hotelAdress: String { get }
 	var distance: String { get }

@@ -51,12 +51,11 @@ final class HotelCell: UITableViewCell {
 			hotelAdress.text = viewModel.hotelAdress
 			viewModel.fetchImage { [weak self] image in
 				guard let self = self else { return }
-				let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.99, height: 0.9))
 				DispatchQueue.main.async {
 					UIView.animate(withDuration: 0.5) {
 						self.myImageView.alpha = 1
 						self.spinnerView.alpha = 0
-						self.myImageView.image = croppedImg
+						self.myImageView.image = image
 					}
 					self.spinner.stopAnimating()
 				}
@@ -152,11 +151,14 @@ final class HotelCell: UITableViewCell {
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
+		hotelName.text?.removeAll()
+		distance.text?.removeAll()
+		suitsAvalibaleCount.text?.removeAll()
+		stars.text?.removeAll()
+		hotelAdress.text?.removeAll()
 		myImageView.image = nil
 	}
 }
-
-
 //MARK: - LAYOUT
 private extension HotelCell {
 	private func addSubviewAndConfigure() {

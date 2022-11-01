@@ -14,7 +14,6 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 	var networkService: NetworkServiceProtocol = NetworkService()
 	var imageDownloader: ImageDownloaderProtocol = ImageDownloader()
 	var hotel: Hotel
-	var hotelWithStr: Hotel!
 	
 	required init(hotel: Hotel) {
 		self.hotel = hotel
@@ -42,10 +41,6 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 	
 	var stars: String {
 		Helper.starsToString(stars: hotel.stars)
-	}
-	
-	func setValue() {
-		
 	}
 	
 	//MARK: - ACTIONS
@@ -76,8 +71,9 @@ extension HotelCellViewModel {
 			imageDownloader.download(url: .getImageUrl(withImageId: imageId)) { result in
 				switch result {
 				case .success(let image):
-					completion(image)
-					ImageCache.shared.setObject(image, forKey: urlKey as NSString)
+					let croppedImg = image.crop(rect: CGRect(x: 1, y: 1, width: 0.99, height: 0.9))
+					completion(croppedImg)
+					ImageCache.shared.setObject(croppedImg, forKey: urlKey as NSString)
 				case .failure(_):
 					completion(def)
 					ImageCache.shared.setObject(def, forKey: urlKey as NSString)
