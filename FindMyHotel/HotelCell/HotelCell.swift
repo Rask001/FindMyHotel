@@ -151,8 +151,8 @@ final class HotelCell: UITableViewCell {
 	}
 	
 	override func prepareForReuse() {
-			super.prepareForReuse()
-		  myImageView.image = nil
+		super.prepareForReuse()
+		myImageView.image = nil
 	}
 }
 

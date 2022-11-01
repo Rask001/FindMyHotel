@@ -18,17 +18,17 @@ final class MainViewModel: MainViewModelProtocol {
 	
 	//MARK: - ACTIONS
 	func fetchHotelsForMainView(completion: @escaping () -> Void) {
-		networkService.fetchDataFromURL(.getHotelsListUrl) { [weak self] (result : Result<[Hotel],Error>) in
-			guard let self = self else { return }
-			switch result {
-			case .success(let model):
+			self.networkService.fetchDataFromURL(.getHotelsListUrl) { [weak self] (result : Result<[Hotel],Error>) in
+				guard let self = self else { return }
+				switch result {
+				case .success(let model):
 					self.hotels = model
 					completion()
-			case .failure(let error):
-				AllertService.systemError(error);
+				case .failure(let error):
+					AllertService.systemError(error);
+				}
 			}
 		}
-	}
 	
 	func allert(notification: NSNotification) -> UIAlertController? {
 		guard let userInfo = notification.userInfo else { return nil }

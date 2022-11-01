@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 
 protocol ImageDownloaderProtocol {
-	func imageDownloader(url: URL, completion: @escaping (Result<UIImage,Error>) -> Void)
+	func download(url: URL, completion: @escaping (Result<UIImage,Error>) -> Void)
 }
 
 final class ImageDownloader: ImageDownloaderProtocol {
 	
 	//MARK: - PROPERTY
 	static let shared = ImageDownloader()
-	static let imageDefault = UIImage(named: "Hotel")!
+	static let defImage = UIImage(named: "Hotel")!
 	//MARK: - METHODS
 	
-	func imageDownloader(url: URL, completion: @escaping (Result<UIImage,Error>) -> Void) {
+	func download(url: URL, completion: @escaping (Result<UIImage,Error>) -> Void) {
 		let session = URLSession(configuration: .default)
 		session.dataTask(with: url) { data, response, error in
 			if let error = error { completion(.failure(error)) }

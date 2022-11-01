@@ -8,12 +8,13 @@
 import Foundation
 import UIKit
 
-final class HotelCellViewModel: HotelCellVMProtocol {
+final class HotelCellViewModel: HotelCellVMProtocol {	
 	
 	//MARK: - PROPERTY
 	var networkService: NetworkServiceProtocol = NetworkService()
 	var imageDownloader: ImageDownloaderProtocol = ImageDownloader()
 	var hotel: Hotel
+	var hotelWithStr: Hotel!
 	
 	required init(hotel: Hotel) {
 		self.hotel = hotel
@@ -43,38 +44,44 @@ final class HotelCellViewModel: HotelCellVMProtocol {
 		Helper.starsToString(stars: hotel.stars)
 	}
 	
-	//MARK: - ACTIONS
-	
-	func fetchImage(completion: @escaping (UIImage) -> Void) {
+	func setValue() {
 		
-		self.networkService.fetchDataFromURL(.getHotelUrl(withID: self.hotel.id)) { [weak self] (result : Result<Hotel,Error>) in
+	}
+	
+	//MARK: - ACTIONS
+	func fetchImage(completion: @escaping (UIImage) -> Void) {
+		networkService.fetchDataFromURL(.getHotelUrl(withID: hotel.id)) { [weak self] (result : Result<Hotel,Error>) in
 			guard let self = self else { return }
 			switch result {
 			case .success(let data):
-				
-				
-				guard let imageStrong = data.image else { completion(ImageDownloader.imageDefault); return }
-				guard imageStrong != "" else { completion(ImageDownloader.imageDefault); return }
-				let urlKey = URL.getHotelUrl(withID: data.id).absoluteString
-				
-				if let image = ImageCache.shared.object(forKey: urlKey as NSString) {
-					completion(image)
-				} else {
-					self.imageDownloader.imageDownloader(url: .getImageUrl(withImageId: imageStrong)) { result in
-						switch result {
-						case .success(let image):
-							completion(image)
-							ImageCache.shared.setObject(image, forKey: urlKey as NSString)
-						case .failure(_):
-							completion(ImageDownloader.imageDefault)
-							ImageCache.shared.setObject(ImageDownloader.imageDefault, forKey: urlKey as NSString)
-						}
-					}
-				}
-				
-				
+				self.downloadImage(hotelImage: data.image) { completion($0) }
 			case .failure(_):
 				AllertService.errorImageDownload()
+			}
+		}
+	}
+}
+
+//MARK: - DOWNLOAD IMAGE
+extension HotelCellViewModel {
+	private func downloadImage(hotelImage: String?, completion: @escaping (UIImage) -> Void) {
+		let def = ImageDownloader.defImage
+		let urlKey = URL.getHotelUrl(withID: hotel.id).absoluteString
+		
+		guard let imageId = hotelImage else { completion(def); return }
+		guard imageId != "" else { completion(def); return }
+		if let image = ImageCache.shared.object(forKey: urlKey as NSString) {
+			completion(image)
+		} else {
+			imageDownloader.download(url: .getImageUrl(withImageId: imageId)) { result in
+				switch result {
+				case .success(let image):
+					completion(image)
+					ImageCache.shared.setObject(image, forKey: urlKey as NSString)
+				case .failure(_):
+					completion(def)
+					ImageCache.shared.setObject(def, forKey: urlKey as NSString)
+				}
 			}
 		}
 	}

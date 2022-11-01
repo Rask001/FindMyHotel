@@ -56,20 +56,20 @@ final class DetailViewModel: DetailViewModelProtocol {
 	//MARK: - ACTIONS
 	
 	func downloadImage(completion: @escaping (UIImage) -> Void) {
-		guard let imageStrong = image else { completion(ImageDownloader.imageDefault); return }
-		guard imageStrong != "" else { completion(ImageDownloader.imageDefault); return }
+		guard let imageStrong = image else { completion(ImageDownloader.defImage); return }
+		guard imageStrong != "" else { completion(ImageDownloader.defImage); return }
 		let urlKey = URL.getHotelUrl(withID: hotel.id).absoluteString
 		if let image = ImageCache.shared.object(forKey: urlKey as NSString) {
 			completion(image)
 		} else {
-			imageDownloader.imageDownloader(url: .getImageUrl(withImageId: imageStrong)) { result in
+			imageDownloader.download(url: .getImageUrl(withImageId: imageStrong)) { result in
 				switch result {
 				case .success(let image):
 					ImageCache.shared.setObject(image, forKey: urlKey as NSString)
 					completion(image)
 				case .failure(_):
 					AllertService.errorImageDownload()
-					completion(ImageDownloader.imageDefault)
+					completion(ImageDownloader.defImage)
 				}
 			}
 		}
