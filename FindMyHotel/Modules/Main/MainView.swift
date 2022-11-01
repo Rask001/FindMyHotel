@@ -45,11 +45,13 @@ final class MainView: UIViewController {
 			}
 		}
 	}
+
 	
 	//MARK: - LIVECYCLE
 	override func viewDidLoad() {
-		setupNotification()
 		super.viewDidLoad()
+		//internrtConnection()
+		setupNotification()
 		viewModel = MainViewModel()
 		setupHeader()
 		setupHeaderStackView()
@@ -60,6 +62,7 @@ final class MainView: UIViewController {
 	}
 	
 	//MARK: - SETUP
+	
 	private func setupTableView() {
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -74,6 +77,7 @@ final class MainView: UIViewController {
 	
 	private func setupNotification() {
 		NotificationCenter.default.addObserver(self, selector: #selector(allertUI), name: Notification.Name("errorSend"), object: .none)
+		NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(notification:)), name: NSNotification.Name.connectivityStatus, object: nil)
 	}
 	
 	private func setupHeader() {
@@ -127,6 +131,10 @@ final class MainView: UIViewController {
 	@objc func allertUI(notification: NSNotification) {
 		guard let allert = viewModel.allert(notification: notification) else { return }
 		present(allert, animated: true)
+	}
+	
+	@objc func showOfflineDeviceUI(notification: Notification) {
+		viewModel.checkConnectStatus()
 	}
 	
 	@objc func tapToSort(sender: UIButton) {

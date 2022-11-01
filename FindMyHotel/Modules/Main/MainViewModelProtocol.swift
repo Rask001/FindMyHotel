@@ -19,4 +19,5 @@ protocol MainViewModelProtocol {
 	func fetchHotelsForMainView(completion: @escaping() -> Void)
 	func numberOfRows() -> Int
 	func sorted(tag: Int)
+	func checkConnectStatus()
 }

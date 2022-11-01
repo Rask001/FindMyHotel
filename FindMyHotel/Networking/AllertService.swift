@@ -28,15 +28,15 @@ final class AllertService {
 		}
 	}
 	
-	static func missingData() {
+	static func theConnectionIsEstablished() {
 		DispatchQueue.main.async {
-			error("\(ServerError.missingData.localizedDescription)")
+			error("\(ServerError.theConnectionIsEstablished.localizedDescription)")
 		}
 	}
 	
 	static func incorrectData() {
 		DispatchQueue.main.async {
-			error("\(ServerError.IncorrectData.localizedDescription)")
+			error("\(ServerError.incorrectData.localizedDescription)")
 		}
 	}
 	
@@ -49,6 +49,11 @@ final class AllertService {
 	static func incorrectUrl() {
 		DispatchQueue.main.async {
 			error("\(ServerError.incorrectUrl.localizedDescription)")
+		}
+	}
+	static func internetConnectionIsFaild() {
+		DispatchQueue.main.async {
+			error("\(ServerError.internetConnectionIsFaild.localizedDescription)")
 		}
 	}
 	

@@ -47,6 +47,19 @@ final class MainViewModel: MainViewModelProtocol {
 		}
 	}
 	
+	func checkConnectStatus() {
+		DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+		let isConnection = NetworkMonitor.shared.isConnected
+			print("connect: \(isConnection)")
+			switch isConnection {
+			case true:
+				AllertService.theConnectionIsEstablished()
+			case false:
+				AllertService.internetConnectionIsFaild()
+			}
+		}
+	}
+	
 	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
 		let hotel = hotels[indexPath.row]
 		return HotelCellViewModel(hotel: hotel)
