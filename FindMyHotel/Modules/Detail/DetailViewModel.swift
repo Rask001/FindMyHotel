@@ -11,16 +11,19 @@ import UIKit
 final class DetailViewModel: DetailViewModelProtocol {
 	
 	//MARK: - PROPERTY
-	let networkService: NetworkServiceProtocol = NetworkService()
-	let imageDownloader: ImageDownloaderProtocol = ImageDownloader()
-	let modulBuilder: ModuleBuilderProtocol = ModuleBuilder()
+	let networkService: NetworkServiceProtocol
+	let imageDownloader: ImageDownloaderProtocol
+	let modulBuilder: ModuleBuilderProtocol
 	var hotel: Hotel
 	var lat: Double?
 	var lon: Double?
 	var image: String?
 	
-	required init(hotel: Hotel) {
+	required init(hotel: Hotel, networkService: NetworkServiceProtocol, imageDownloader: ImageDownloaderProtocol, modulBuilder: ModuleBuilderProtocol) {
 		self.hotel = hotel
+		self.networkService = networkService
+		self.imageDownloader = imageDownloader
+		self.modulBuilder = modulBuilder
 		set()
 	}
 	

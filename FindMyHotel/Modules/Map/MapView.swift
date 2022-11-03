@@ -21,7 +21,7 @@ final class MapView: UIViewController {
 	
 	//MARK: - PROPERTY
 	var viewModel: MapViewModelProtocol!
-	private let map = MKMapView()
+	var map: MKMapView!
 	private var lat: Double!
 	private var lon: Double!
 	private var coordinate: CLLocationCoordinate2D!
@@ -39,6 +39,7 @@ final class MapView: UIViewController {
 	private func setupCoordinate() {
 		lat = viewModel.lat
 		lon = viewModel.lon
+		map = viewModel.map
 		coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
 	}
 	

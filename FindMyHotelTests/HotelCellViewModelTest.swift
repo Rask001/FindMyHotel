@@ -37,7 +37,6 @@ final class HotelCellViewModelTest: XCTestCase {
 		XCTAssertEqual(Helper.starsToString(stars: hotel.stars), mockHotelCellViewModel.stars)
 		XCTAssertEqual("📍\(hotel.distance)km from center", mockHotelCellViewModel.distance)
 		XCTAssertEqual(hotel.suitesArray.count, transform.count)
-		
 	}
 
 

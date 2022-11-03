@@ -35,7 +35,7 @@ final class MainView: UIViewController {
 	private let headerStackView = UIStackView()
 	private let buttonSortName = [Constants.popularity, Constants.distance, Constants.avalibleRooms]
 	private var headerViewTopConstraint: NSLayoutConstraint?
-	private var viewModel: MainViewModelProtocol! {
+	var viewModel: MainViewModelProtocol! {
 		didSet {
 			viewModel.fetchHotelsForMainView { [weak self] in
 				guard let self = self else { return }
@@ -50,9 +50,7 @@ final class MainView: UIViewController {
 	//MARK: - LIVECYCLE
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		//internrtConnection()
 		setupNotification()
-		viewModel = MainViewModel()
 		setupHeader()
 		setupHeaderStackView()
 		setupNavigation()

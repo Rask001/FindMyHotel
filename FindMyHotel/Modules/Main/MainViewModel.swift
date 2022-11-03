@@ -11,11 +11,20 @@ import UIKit
 final class MainViewModel: MainViewModelProtocol {
 	
 	//MARK: - PROPERTY
-	var networkService: NetworkServiceProtocol = NetworkService()
-	let animations: AnimationsProtocol = Animations()
-	var allertService = AllertService()
-	let builder: ModuleBuilderProtocol = ModuleBuilder()
-	var hotels: [Hotel] = []
+	var networkService: NetworkServiceProtocol
+	let animations: AnimationsProtocol
+	var allertService: AllertService
+	let builder: ModuleBuilderProtocol
+	var hotels: [Hotel]
+	
+	//MARK: - INIT
+	required init(hotels: [Hotel], networkService: NetworkServiceProtocol, animations: AnimationsProtocol, allertService: AllertService, builder: ModuleBuilderProtocol) {
+		self.hotels = hotels
+		self.networkService = networkService
+		self.animations = animations
+		self.allertService = allertService
+		self.builder = builder
+	}
 	
 	//MARK: - ACTIONS
 	func fetchHotelsForMainView(completion: @escaping () -> Void) {

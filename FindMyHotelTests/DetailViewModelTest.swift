@@ -47,5 +47,36 @@ final class DetailViewModelTest: XCTestCase {
 		XCTAssertEqual("📍\(hotel.distance)km from center", mockDetailViewModel.distance)
 		XCTAssertEqual(hotel.suitesArray.count, mockDetailViewModel.numberOfRows())
 	}
-
+	
+	func testFetchHotelForDetailView() {
+		var called = false
+		mockDetailViewModel.fetchHotelForDetailView {
+			called = true
+		}
+		DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+			XCTAssertEqual(called, true)
+		}
+	}
+	
+	func testSet() {
+		let espect = expectation(description: "Download should succeed")
+		networkService.fetchDataFromURL(.getHotelUrl(withID: hotel.id)) { [weak self] (result : Result<Hotel,Error>) in
+			
+			guard let self = self else { return }
+			switch result {
+			case .success(let model):
+				XCTAssertEqual(model.lon, self.lon)
+				XCTAssertEqual(model.lat, self.lat)
+				print("model: \(model.lat ?? 0.0), self: \(self.lat ?? 0.0)")
+				XCTAssertEqual(model.image, self.image)
+				
+			case .failure(let error):
+				print(error)
+			}
+			espect.fulfill()
+		}
+		waitForExpectations(timeout: 10) { error in
+			XCTAssertNil(error, "Test timed out. \(error?.localizedDescription ?? "error")")
+		}
+	}
 }

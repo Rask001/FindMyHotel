@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 //MARK: - PROTOCOL
 protocol ModuleBuilderProtocol {
@@ -17,22 +18,34 @@ protocol ModuleBuilderProtocol {
 
 //MARK: - CLASS
 final class ModuleBuilder: ModuleBuilderProtocol {
-	
 	func createMainView() -> UIViewController {
+		let hotels = [Hotel]()
+		let networkService = NetworkService()
+		let animations = Animations()
+		let allertService = AllertService()
+		let builder = ModuleBuilder()
 		let view = MainView()
+		
+		let viewModel = MainViewModel(hotels: hotels, networkService: networkService, animations: animations, allertService: allertService, builder: builder)
+		view.viewModel = viewModel
 		return view
 	}
 	
 	func createDetailView(hotel: Hotel) -> UIViewController {
 		let view = DetailView()
-		let viewModel = DetailViewModel(hotel: hotel)
+		let networkService = NetworkService()
+		let builder = ModuleBuilder()
+		let imageDownloader = ImageDownloader()
+		let viewModel = DetailViewModel(hotel: hotel, networkService: networkService, imageDownloader: imageDownloader, modulBuilder: builder)
 		view.viewModel = viewModel
 		return view
 	}
 	
 	func createMapView(lat: Double, lon: Double) -> UIViewController {
+
+		let map = MKMapView()
 		let view = MapView()
-		let viewModel = MapViewModel(lat: lat, lon: lon)
+		let viewModel = MapViewModel(lat: lat, lon: lon, map: map)
 		view.viewModel = viewModel
 		return view
 	}
