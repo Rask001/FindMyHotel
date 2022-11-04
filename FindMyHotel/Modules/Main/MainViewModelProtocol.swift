@@ -11,7 +11,7 @@ import UIKit
 //MARK: - PROTOCOL
 protocol MainViewModelProtocol {
 	var hotels: [Hotel] { get }
-	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
+	func createCellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol
 	var networkService: NetworkServiceProtocol { get }
 	var animations: AnimationsProtocol { get }
 	var allertService: AllertService { get }

@@ -180,12 +180,11 @@ private extension MainView {
 
 //MARK: - DataSource
 extension MainView: UITableViewDataSource {
-	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: HotelCell.identifire, for: indexPath) as? HotelCell else {
 			return UITableViewCell()
 		}
-		cell.viewModel = viewModel.cellViewModel(indexPath: indexPath)
+		cell.viewModel = viewModel.createCellViewModel(indexPath: indexPath)
 		return cell
 	}
 }

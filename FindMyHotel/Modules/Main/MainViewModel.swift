@@ -10,6 +10,7 @@ import UIKit
 
 final class MainViewModel: MainViewModelProtocol {
 	
+	
 	//MARK: - PROPERTY
 	var networkService: NetworkServiceProtocol
 	let animations: AnimationsProtocol
@@ -74,9 +75,9 @@ final class MainViewModel: MainViewModelProtocol {
 		return vc
 	}
 	
-	func cellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
+	func createCellViewModel(indexPath: IndexPath) -> HotelCellVMProtocol {
 		let hotel = hotels[indexPath.row]
-		return HotelCellViewModel(hotel: hotel)
+		return builder.createHotelCellViewModel(hotel: hotel)
 	}
 	
 	func numberOfRows() -> Int {

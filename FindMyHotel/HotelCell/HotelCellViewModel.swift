@@ -11,12 +11,14 @@ import UIKit
 final class HotelCellViewModel: HotelCellVMProtocol {	
 	
 	//MARK: - PROPERTY
-	var networkService: NetworkServiceProtocol = NetworkService()
-	var imageDownloader: ImageDownloaderProtocol = ImageDownloader()
+	var networkService: NetworkServiceProtocol
+	var imageDownloader: ImageDownloaderProtocol
 	var hotel: Hotel
 	
-	required init(hotel: Hotel) {
+	required init(hotel: Hotel, networkService: NetworkServiceProtocol, imageDownloader: ImageDownloaderProtocol) {
 		self.hotel = hotel
+		self.networkService = networkService
+		self.imageDownloader = imageDownloader
 	}
 	
 	var hotelAdress: String {
