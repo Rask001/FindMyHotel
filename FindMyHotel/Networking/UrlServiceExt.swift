@@ -9,15 +9,15 @@ import Foundation
 
 extension URL {
 	static var getHotelsListUrl: URL {
-		URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json")!
+		URL(string: //nda переписываю json)!
 	}
 	
 	static func getHotelUrl(withID id: Int) -> URL {
-		URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/\(id).json")!
+		URL(string:  //nda переписываю json)!
 	}
 	
 	static func getImageUrl(withImageId id: String) -> URL {
-		URL(string: "https://github.com/iMofas/ios-android-test/raw/master/\(id)")!
+		URL(string:  //nda переписываю json)!
 	}
 }
 
